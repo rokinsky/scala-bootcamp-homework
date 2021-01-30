@@ -11,7 +11,6 @@ object Basics {
 
   def lcm(a: Int, b: Int): Int = (a, b) match {
     case (_, 0) => 0
-    case (0, _) => 0
     case (_, _) => abs(a) / gcd(a, b) * abs(b)
   }
 
