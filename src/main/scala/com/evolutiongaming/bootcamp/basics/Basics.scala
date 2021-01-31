@@ -4,6 +4,10 @@ import scala.annotation.tailrec
 import scala.math.abs
 
 object Basics {
+  // Homework. Implement functions that calculate
+  // https://en.wikipedia.org/wiki/Least_common_multiple and
+  // https://en.wikipedia.org/wiki/Greatest_common_divisor for integers.
+
   // NOTE: Assuming that `lcm` and `gcd` won’t be invoked with arguments
   // that will cause an overflow as in general case it is possible, e.g.
   // lcm(895342101, 1592538308) shouldEqual 1425866594607705108
