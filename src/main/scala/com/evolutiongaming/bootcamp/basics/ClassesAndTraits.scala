@@ -22,11 +22,9 @@ object ClassesAndTraits {
   private[basics] object GeometricUtils {
     // scala.math.hypot works only with two parameters
     // we assume that overflow will not occur here
-    // but in general case this function is unsafe
-    def hypot(xs: Double*): Double = xs match {
-      case Nil => 0
-      case _   => sqrt(xs.fold(0d)((acc, cur) => acc + pow(cur, 2)))
-    }
+    // but in general case this method is unsafe
+    def hypot(xs: Double*): Double =
+      sqrt(xs.fold(0d)((acc, cur) => acc + pow(cur, 2)))
 
     def heron(ab: Double, bc: Double, ca: Double): Double = {
       val s = (ab + bc + ca) / 2
