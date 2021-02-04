@@ -33,3 +33,9 @@ sbt test
 - [ ] *2021-02-03*
   [ClassesAndTraits](src/main/scala/com/evolutiongaming/bootcamp/basics/ClassesAndTraits.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/ClassesAndTraitsSpec.scala))
+
+- [x] *2021-02-10*
+  [Collections](src/main/scala/com/evolutiongaming/bootcamp/basics/Collections.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/CollectionsSpec.scala)),
+  [DataStructures](src/main/scala/com/evolutiongaming/bootcamp/basics/DataStructures.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/DataStructuresSpec.scala))
