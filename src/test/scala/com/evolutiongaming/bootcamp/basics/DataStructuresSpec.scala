@@ -8,6 +8,10 @@ import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 class DataStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks {
   behavior of "allEqual"
 
+  it should "work for empty list" in {
+    allEqual(Nil) shouldBe true
+  }
+
   it should "work for lists which are all equal" in {
     allEqual(List("a", "a", "a", "a")) shouldBe true
   }
