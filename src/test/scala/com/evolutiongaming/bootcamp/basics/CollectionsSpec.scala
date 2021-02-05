@@ -146,4 +146,22 @@ class CollectionsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks {
   it should "work correctly on example 4" in {
     maxDepth("1") shouldEqual 0
   }
+
+  behavior of "balancedStringSplit"
+
+  it should "work correctly on example 1" in {
+    balancedStringSplit("RLRRLLRLRL") shouldEqual 4
+  }
+
+  it should "work correctly on example 2" in {
+    balancedStringSplit("RLLLLRRRLR") shouldEqual 3
+  }
+
+  it should "work correctly on example 3" in {
+    balancedStringSplit("LLLLRRRR") shouldEqual 1
+  }
+
+  it should "work correctly on example 4" in {
+    balancedStringSplit("RLRRRLLRLL") shouldEqual 2
+  }
 }
