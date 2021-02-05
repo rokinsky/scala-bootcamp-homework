@@ -43,7 +43,7 @@ object Collections {
   // hometask:
   // https://leetcode.com/problems/running-sum-of-1d-array/
   def runningSum(nums: Array[Int]): Array[Int] = {
-    nums.scanLeft(0)(_ + _).drop(1)
+    nums.scanLeft(0)(_ + _).tail
   }
 
   // https://leetcode.com/problems/shuffle-the-array
@@ -65,7 +65,7 @@ object Collections {
 
   // https://leetcode.com/problems/widest-vertical-area-between-two-points-containing-no-points
   def maxWidthOfVerticalArea(points: Array[Array[Int]]): Int = {
-     val sortedXs = points.map { case Array(x, _) => x }.sorted
+     val sortedXs = points.map(_.head).sorted
      sortedXs.zip(sortedXs.tail).map { case (cur, next) => next - cur }.max
   }
 
