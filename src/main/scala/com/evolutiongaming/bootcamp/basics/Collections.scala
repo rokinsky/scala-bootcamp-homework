@@ -1,11 +1,10 @@
 package com.evolutiongaming.bootcamp.basics
 
 object Collections {
-  /*
-   In a sorted list find two numbers which have a gap between
-      None for List(1, 2, 3, 4)
-      Some((2, 8)) for List(1, 2, 8)
-  */
+
+  // In a sorted list find two numbers which have a gap between
+  //    None for List(1, 2, 3, 4)
+  //    Some((2, 8)) for List(1, 2, 8)
   def findGap(l: List[Int]): Option[(Int, Int)] = l match {
     case Nil => None
     case xs => xs.zip(xs.tail).find { case (left, right) => right - left > 1 }
@@ -14,17 +13,17 @@ object Collections {
   // try to implement min different ways (fold, reduce, recursion)
   def min(list: List[Int]): Option[Int] = {
     list.minOption
-    //list.reduceOption(math.min)
+    // list.reduceOption(math.min)
 
-    //list match {
-    //  case Nil  => None
-    //  case _    => Some(list.foldLeft(list.head)(math.min))
-    //}
+    // list match {
+    //   case Nil  => None
+    //   case _    => Some(list.foldLeft(list.head)(math.min))
+    // }
     //
-    //list match {
-    //  case Nil  => None
-    //  case _    => Some(list.reduce(math.min))
-    //}
+    // list match {
+    //   case Nil  => None
+    //   case _    => Some(list.reduce(math.min))
+    // }
   }
 
   // Implement scanLeft (not using scans ofc)
@@ -43,10 +42,32 @@ object Collections {
 
   // hometask:
   // https://leetcode.com/problems/running-sum-of-1d-array/
+  def runningSum(nums: Array[Int]): Array[Int] = {
+    nums.scanLeft(0)(_ + _).drop(1)
+  }
+
   // https://leetcode.com/problems/shuffle-the-array
+  def shuffle(nums: Array[Int], n: Int): Array[Int] = {
+    // (nums.take(n) zip nums.takeRight(n)).flatMap { case (a, b) => Array(a, b) }
+    Array.range(0, n).flatMap(x => Array(nums(x), nums(x + n)))
+  }
+
   // https://leetcode.com/problems/richest-customer-wealth
+  def maximumWealth(accounts: Array[Array[Int]]): Int = {
+    accounts.map(_.sum).max
+  }
+
   // https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/
+  def kidsWithCandies(candies: Array[Int], extraCandies: Int): Array[Boolean] = {
+    val max = candies.max
+    candies.map(_ + extraCandies >= max)
+  }
+
   // https://leetcode.com/problems/widest-vertical-area-between-two-points-containing-no-points
+  def maxWidthOfVerticalArea(points: Array[Array[Int]]): Int = {
+     val sortedXs = points.map { case Array(x, _) => x }.sorted
+     sortedXs.zip(sortedXs.tail).map { case (cur, next) => next - cur }.max
+  }
 
   // optional hometask:
   //
