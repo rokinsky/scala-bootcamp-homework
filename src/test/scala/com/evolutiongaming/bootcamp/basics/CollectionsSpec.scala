@@ -128,4 +128,22 @@ class CollectionsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks {
       Array(8, 8)
     )) shouldEqual 3
   }
+
+  behavior of "maxDepth"
+
+  it should "work correctly on example 1" in {
+    maxDepth("(1+(2*3)+((8)/4))+1") shouldEqual 3
+  }
+
+  it should "work correctly on example 2" in {
+    maxDepth("(1)+((2))+(((3)))") shouldEqual 3
+  }
+
+  it should "work correctly on example 3" in {
+    maxDepth("1+(2*3)/(2-1)") shouldEqual 1
+  }
+
+  it should "work correctly on example 4" in {
+    maxDepth("1") shouldEqual 0
+  }
 }

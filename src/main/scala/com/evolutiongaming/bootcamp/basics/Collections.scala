@@ -72,6 +72,19 @@ object Collections {
   // optional hometask:
   //
   // https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/
+  def maxDepth(s: String): Int = {
+    s.foldLeft((0, 0)) {
+      case ((max, acc), cur) if cur == '(' => (max, acc + 1)
+      case ((max, acc), cur) if cur == ')' => (math.max(max, acc), acc - 1)
+      case (acc, _)                        => acc
+    } match {
+      case (max, _) => max
+    }
+  }
+
   // https://leetcode.com/problems/split-a-string-in-balanced-strings
+  // TODO
+
   // https://leetcode.com/problems/matrix-block-sum/
+  // TODO
 }
