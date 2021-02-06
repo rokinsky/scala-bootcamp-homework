@@ -95,7 +95,7 @@ object ControlStructures {
     }
   }
 
-  final case class Result(command: Command, result: Double);
+  final case class Result(command: Command, result: Double)
 
   sealed trait Error
   sealed trait ParseError extends Error
