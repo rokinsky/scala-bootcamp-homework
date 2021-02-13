@@ -35,7 +35,7 @@ class DataStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks
   it should "be correct" in {
     totalVegetableWeights shouldEqual Map(
       "cucumbers" -> 6460,
-      "olives" -> 64,
+      "olives"    -> 64,
     )
   }
 
@@ -47,13 +47,13 @@ class DataStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks
 
   it should "work correctly" in {
     def fact(num: Int): BigDecimal = {
-      (1 to num).map(x => BigDecimal.valueOf(x.toLong)).foldLeft(BigDecimal.valueOf(1)) ((a, b) => a * b)
+      (1 to num).map(x => BigDecimal.valueOf(x.toLong)).foldLeft(BigDecimal.valueOf(1))((a, b) => a * b)
     }
 
     val set = (0 until 16).toSet
     (1 to 4) foreach { k =>
-      val obtained = allSubsetsOfSizeN(set, k)
-      val n = set.size
+      val obtained     = allSubsetsOfSizeN(set, k)
+      val n            = set.size
       val expectedSize = fact(n) / (fact(k) * fact(n - k))
       obtained.size shouldEqual expectedSize.toLong
       obtained.forall(_.size == k) shouldEqual true
@@ -63,7 +63,7 @@ class DataStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks
   behavior of "sortConsideringEqualValues"
 
   it should "be correct on example 1" in {
-    val input = Map("a" -> 1, "b" -> 2, "c" -> 4, "d" -> 1, "e" -> 0, "f" -> 2, "g" -> 2)
+    val input    = Map("a" -> 1, "b" -> 2, "c" -> 4, "d" -> 1, "e" -> 0, "f" -> 2, "g" -> 2)
     val expected = List(Set("e") -> 0, Set("a", "d") -> 1, Set("b", "f", "g") -> 2, Set("c") -> 4)
     val obtained = sortConsideringEqualValues(input)
     obtained shouldEqual expected
@@ -76,9 +76,9 @@ class DataStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks
 
     sortConsideringEqualValues(values) shouldEqual List(
       Set("a1", "a2") -> 'a'.toInt,
-      Set("b1") -> 'b'.toInt,
+      Set("b1")       -> 'b'.toInt,
       Set("c1", "c2") -> 'c'.toInt,
-      Set("d1") -> 'd'.toInt,
+      Set("d1")       -> 'd'.toInt,
     )
   }
 }

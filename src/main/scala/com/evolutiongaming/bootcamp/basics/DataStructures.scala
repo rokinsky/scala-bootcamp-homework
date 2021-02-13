@@ -18,37 +18,35 @@ object DataStructures {
 
   val vegetablePrices = Map(
     "tomatoes" -> 4,
-    "peppers" -> 5,
-    "olives" -> 17,
+    "peppers"  -> 5,
+    "olives"   -> 17,
   )
 
   val vegetableAmounts = Map(
-    "tomatoes" -> 17,
-    "peppers" -> 234,
-    "olives" -> 32,
+    "tomatoes"  -> 17,
+    "peppers"   -> 234,
+    "olives"    -> 32,
     "cucumbers" -> 323,
   )
 
-  val tomatoAmount: Int = vegetableAmounts("tomatoes")
-  val tomatoAmountOpt: Option[Int] = vegetableAmounts.get("tomatoes")
-  val carrotAmountWithDefault: Int = vegetableAmounts.getOrElse("carrots", 0)
+  val tomatoAmount:            Int         = vegetableAmounts("tomatoes")
+  val tomatoAmountOpt:         Option[Int] = vegetableAmounts.get("tomatoes")
+  val carrotAmountWithDefault: Int         = vegetableAmounts.getOrElse("carrots", 0)
 
   // Exercise. Calculate the total cost of all vegetables, taking vegetable amounts (in units) from
   // `vegetableAmounts` and prices per unit from `vegetablePrices`. Assume the price is 10 if not available
   // in `vegetablePrices`.
   val totalVegetableCost: Int =
-    vegetableAmounts
-      .map { case (vegetable, amount) => amount * vegetablePrices.getOrElse(vegetable, 10) }
-      .sum
+    vegetableAmounts.map { case (vegetable, amount) => amount * vegetablePrices.getOrElse(vegetable, 10) }.sum
 
   // Exercise. Given the vegetable weights (per 1 unit of vegetable) in `vegetableWeights` and vegetable
   // amounts (in units) in `vegetableAmounts`, calculate the total weight per type of vegetable, if known.
   //
   // For example, the total weight of "olives" is 2 * 32 == 64.
   val totalVegetableWeights: Map[String, Int] =
-    (vegetableAmounts.keySet intersect vegetableWeights.keySet)
-      .map { vegetable => (vegetable, vegetableAmounts(vegetable) * vegetableWeights(vegetable))}
-      .toMap
+    (vegetableAmounts.keySet intersect vegetableWeights.keySet).map { vegetable =>
+      (vegetable, vegetableAmounts(vegetable) * vegetableWeights(vegetable))
+    }.toMap
 
   // Exercise: Return a set with all subsets of the provided set `set` with `n` elements
   // For example, `allSubsetsOfSizeN(Set(1, 2, 3), 2) == Set(Set(1, 2), Set(2, 3), Set(1, 3))`.
@@ -62,10 +60,11 @@ object DataStructures {
 
     n match {
       case 1 => set.map(Set(_))
-      case n => for {
-        elem <- set
-        subsets <- allSubsetsOfSizeN(set - elem, n - 1)
-      } yield subsets + elem
+      case n =>
+        for {
+          elem    <- set
+          subsets <- allSubsetsOfSizeN(set - elem, n - 1)
+        } yield subsets + elem
     }
   }
 

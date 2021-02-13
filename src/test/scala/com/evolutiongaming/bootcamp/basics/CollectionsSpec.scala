@@ -110,23 +110,27 @@ class CollectionsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks {
   behavior of "maxWidthOfVerticalArea"
 
   it should "work correctly on example 1" in {
-    maxWidthOfVerticalArea(Array(
-      Array(8, 7),
-      Array(9, 9),
-      Array(7, 4),
-      Array(9, 7)
-    )) shouldEqual 1
+    maxWidthOfVerticalArea(
+      Array(
+        Array(8, 7),
+        Array(9, 9),
+        Array(7, 4),
+        Array(9, 7)
+      )
+    ) shouldEqual 1
   }
 
   it should "work correctly on example 2" in {
-    maxWidthOfVerticalArea(Array(
-      Array(3, 1),
-      Array(9, 0),
-      Array(1, 0),
-      Array(1, 4),
-      Array(5, 3),
-      Array(8, 8)
-    )) shouldEqual 3
+    maxWidthOfVerticalArea(
+      Array(
+        Array(3, 1),
+        Array(9, 0),
+        Array(1, 0),
+        Array(1, 4),
+        Array(5, 3),
+        Array(8, 8)
+      )
+    ) shouldEqual 3
   }
 
   behavior of "maxDepth"

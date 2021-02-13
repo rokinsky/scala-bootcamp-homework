@@ -7,7 +7,7 @@ object Collections {
   //    Some((2, 8)) for List(1, 2, 8)
   def findGap(l: List[Int]): Option[(Int, Int)] = l match {
     case Nil => None
-    case xs => xs.zip(xs.tail).find { case (left, right) => right - left > 1 }
+    case xs  => xs.zip(xs.tail).find { case (left, right) => right - left > 1 }
   }
 
   // try to implement min different ways (fold, reduce, recursion)
@@ -48,7 +48,7 @@ object Collections {
 
   // https://leetcode.com/problems/shuffle-the-array
   def shuffle(nums: Array[Int], n: Int): Array[Int] = {
-    // (nums.take(n) zip nums.takeRight(n)).flatMap { case (a, b) => Array(a, b) }
+    // (nums.take(n) zip nums.drop(n)).flatMap { case (a, b) => Array(a, b) }
     Array.range(0, n).flatMap(x => Array(nums(x), nums(x + n)))
   }
 
@@ -65,21 +65,18 @@ object Collections {
 
   // https://leetcode.com/problems/widest-vertical-area-between-two-points-containing-no-points
   def maxWidthOfVerticalArea(points: Array[Array[Int]]): Int = {
-     val sortedXs = points.map(_.head).sorted
-     sortedXs.zip(sortedXs.tail).map { case (cur, next) => next - cur }.max
+    points.map(_.head).sorted.sliding(2).map(a => a(1) - a(0)).max
   }
 
   // optional hometask:
   //
   // https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/
   def maxDepth(s: String): Int = {
-    s.foldLeft((0, 0)) {
-      case ((max, acc), '(') => (max, acc + 1)
-      case ((max, acc), ')') => (math.max(max, acc), acc - 1)
-      case (acc, _)          => acc
-    } match {
-      case (max, _) => max
-    }
+    s.scanLeft(0) {
+      case (depth, '(') => depth + 1
+      case (depth, ')') => depth - 1
+      case (depth, _)   => depth
+    }.max
   }
 
   // https://leetcode.com/problems/split-a-string-in-balanced-strings
