@@ -30,9 +30,13 @@ sbt test
   [Basics](src/main/scala/com/evolutiongaming/bootcamp/basics/Basics.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/BasicsSpec.scala))
 
-- [ ] *2021-02-03*
+- [x] *2021-02-03*
   [ClassesAndTraits](src/main/scala/com/evolutiongaming/bootcamp/basics/ClassesAndTraits.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/ClassesAndTraitsSpec.scala))
+
+- [x] *2021-02-08*
+  [ControlStructures](src/main/scala/com/evolutiongaming/bootcamp/basics/ControlStructures.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/ControlStructuresSpec.scala))
 
 - [x] *2021-02-10*
   [Collections](src/main/scala/com/evolutiongaming/bootcamp/basics/Collections.scala)

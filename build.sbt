@@ -9,6 +9,7 @@ scalacOptions ++= Seq(
   "-deprecation",
   "-feature",
   "-Ymacro-annotations",
+  "-Xfatal-warnings"
 )
 
 val http4sVersion = "0.21.7"
