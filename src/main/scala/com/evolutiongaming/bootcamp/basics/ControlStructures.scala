@@ -62,7 +62,7 @@ object ControlStructures {
       def apply(dividend: String, divisor: String): Either[ParseError, Divide] =
         for {
           parsedDividend <- parse(dividend)
-          parsedDivisor <- parse(divisor)
+          parsedDivisor  <- parse(divisor)
         } yield Divide(parsedDividend, parsedDivisor)
     }
 
@@ -101,24 +101,24 @@ object ControlStructures {
   sealed trait ParseError extends Error
   sealed trait CalculationError extends Error
   object Error {
-    final case class NumberFormat(nonNumber: String)      extends ParseError
-    final case class NumberOfArguments(nArguments: Int)   extends ParseError
-    final case object UnrecognizedCommand                 extends ParseError
-    final case object DivisionByZero                      extends CalculationError
-    final case object NilCalculation                      extends CalculationError
+    final case class NumberFormat(nonNumber: String) extends ParseError
+    final case class NumberOfArguments(nArguments: Int) extends ParseError
+    final case object UnrecognizedCommand extends ParseError
+    final case object DivisionByZero extends CalculationError
+    final case object NilCalculation extends CalculationError
   }
 
   def parseCommand(input: String): Either[ParseError, Command] = {
     import Command._
 
     input.strip.split("\\s+").toList match {
-      case "divide"   :: dividend :: divisor :: Nil => Divide(dividend, divisor)
-      case "divide"   :: _                          => Left(Error.NumberOfArguments(2))
-      case "sum"      :: numbers                    => Sum(numbers)
-      case "average"  :: numbers                    => Average(numbers)
-      case "min"      :: numbers                    => Min(numbers)
-      case "max"      :: numbers                    => Max(numbers)
-      case _                                        => Left(Error.UnrecognizedCommand)
+      case "divide" :: dividend :: divisor :: Nil => Divide(dividend, divisor)
+      case "divide" :: _                          => Left(Error.NumberOfArguments(2))
+      case "sum" :: numbers                       => Sum(numbers)
+      case "average" :: numbers                   => Average(numbers)
+      case "min" :: numbers                       => Min(numbers)
+      case "max" :: numbers                       => Max(numbers)
+      case _                                      => Left(Error.UnrecognizedCommand)
     }
   }
 
@@ -144,11 +144,13 @@ object ControlStructures {
     import NumberRenderer._
 
     result match {
-      case Result(Divide(dividend, divisor), result) => s"${render(dividend)} divided by ${render(divisor)} is ${render(result)}"
-      case Result(Sum(numbers), result)              => s"the sum of ${render(numbers)} is ${render(result)}"
-      case Result(Average(numbers), result)          => s"the average of ${render(numbers)} is ${render(result)}"
-      case Result(Min(numbers), result)              => s"the minimum of ${render(numbers)} is ${render(result)}"
-      case Result(Max(numbers), result)              => s"the maximum of ${render(numbers)} is ${render(result)}"
+      case Result(Divide(dividend, divisor), result) =>
+        s"${render(dividend)} divided by ${render(divisor)} is ${render(result)}"
+      case Result(Sum(numbers), result) => s"the sum of ${render(numbers)} is ${render(result)}"
+      case Result(Average(numbers), result) =>
+        s"the average of ${render(numbers)} is ${render(result)}"
+      case Result(Min(numbers), result) => s"the minimum of ${render(numbers)} is ${render(result)}"
+      case Result(Max(numbers), result) => s"the maximum of ${render(numbers)} is ${render(result)}"
     }
   }
 
@@ -156,11 +158,11 @@ object ControlStructures {
     import Error._
 
     val message = error match {
-      case NumberFormat(value)       => s"non-number detected ($value)"
-      case UnrecognizedCommand       => "unrecognized command"
-      case NumberOfArguments(value)  => s"command requires precisely $value arguments"
-      case DivisionByZero            => "division by zero is not defined"
-      case NilCalculation            => "command isn't defined for an empty list of arguments"
+      case NumberFormat(value)      => s"non-number detected ($value)"
+      case UnrecognizedCommand      => "unrecognized command"
+      case NumberOfArguments(value) => s"command requires precisely $value arguments"
+      case DivisionByZero           => "division by zero is not defined"
+      case NilCalculation           => "command isn't defined for an empty list of arguments"
     }
 
     s"Error: $message"

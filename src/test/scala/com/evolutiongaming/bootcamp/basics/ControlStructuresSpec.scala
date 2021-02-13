@@ -31,8 +31,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right parsed" in {
-    forAll {
-      (dividend: Double, divisor: Double) => {
+    forAll { (dividend: Double, divisor: Double) =>
+      {
         parseCommand(s"divide $dividend $divisor") shouldBe
           Right(Command.Divide(dividend, divisor))
       }
@@ -40,8 +40,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right calculated" in {
-    forAll {
-      (dividend: Double, divisor: Double) => {
+    forAll { (dividend: Double, divisor: Double) =>
+      {
         whenever(divisor != 0) {
           val command = Command.Divide(dividend, divisor)
           calculate(command) shouldBe Right(Result(command, dividend / divisor))
@@ -67,8 +67,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right parsed" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         parseCommand(s"sum ${numbers.mkString(" ")}") shouldBe
           Right(Command.Sum(numbers))
       }
@@ -76,8 +76,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right calculated" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         whenever(numbers.nonEmpty) {
           val command = Command.Sum(numbers)
           calculate(command) shouldBe
@@ -104,8 +104,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right parsed" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         parseCommand(s"average ${numbers.mkString(" ")}") shouldBe
           Right(Command.Average(numbers))
       }
@@ -113,8 +113,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right calculated" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         whenever(numbers.nonEmpty) {
           val command = Command.Average(numbers)
           calculate(command) shouldBe
@@ -141,8 +141,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right parsed" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         parseCommand(s"min ${numbers.mkString(" ")}") shouldBe
           Right(Command.Min(numbers))
       }
@@ -150,8 +150,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right calculated" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         whenever(numbers.nonEmpty) {
           val command = Command.Min(numbers)
           calculate(command) shouldBe
@@ -180,8 +180,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right parsed" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         parseCommand(s"max ${numbers.mkString(" ")}") shouldBe
           Right(Command.Max(numbers))
       }
@@ -189,8 +189,8 @@ class ControlStructuresSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChe
   }
 
   it should "be right calculated" in {
-    forAll {
-      (numbers: List[Double]) => {
+    forAll { (numbers: List[Double]) =>
+      {
         whenever(numbers.nonEmpty) {
           val command = Command.Max(numbers)
           calculate(command) shouldBe
