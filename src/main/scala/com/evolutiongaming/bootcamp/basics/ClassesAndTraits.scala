@@ -1,6 +1,6 @@
 package com.evolutiongaming.bootcamp.basics
 
-import scala.math.{Pi, pow, sqrt}
+import scala.math.{pow, sqrt, Pi}
 
 object ClassesAndTraits {
   // Homework
@@ -36,12 +36,7 @@ object ClassesAndTraits {
 
   // Two dimensional shapes
 
-  sealed trait Shape2D[T <: Shape2D[T]] extends
-    Shape with
-    Geometric2D with
-    Located2D with
-    Bounded2D with
-    Movable2D[T]
+  sealed trait Shape2D[T <: Shape2D[T]] extends Shape with Geometric2D with Located2D with Bounded2D with Movable2D[T]
 
   sealed trait Geometric2D {
     def area: Double
@@ -69,7 +64,8 @@ object ClassesAndTraits {
   }
 
   final case class Point2D(
-    x: Double, y: Double
+    x: Double,
+    y: Double
   ) extends Shape2D[Point2D] {
 
     val minX: Double = x
@@ -86,7 +82,8 @@ object ClassesAndTraits {
   }
 
   final case class Circle(
-    x: Double, y: Double,
+    x:      Double,
+    y:      Double,
     radius: Double
   ) extends Shape2D[Circle] {
 
@@ -101,8 +98,10 @@ object ClassesAndTraits {
   }
 
   final case class Rectangle(
-    x: Double, y: Double,
-    width: Double, height: Double
+    x:      Double,
+    y:      Double,
+    width:  Double,
+    height: Double
   ) extends Shape2D[Rectangle] {
 
     val minX: Double = x - width / 2
@@ -116,7 +115,8 @@ object ClassesAndTraits {
   }
 
   final case class Square(
-    x: Double, y: Double,
+    x:    Double,
+    y:    Double,
     side: Double
   ) extends Shape2D[Square] {
 
@@ -131,14 +131,16 @@ object ClassesAndTraits {
   }
 
   final case class Triangle(
-    a: Point2D, b: Point2D, c: Point2D
+    a: Point2D,
+    b: Point2D,
+    c: Point2D
   ) extends Shape2D[Triangle] {
 
-    private val xs   = Vector(a, b, c).map(_.x)
-    private val ys   = Vector(a, b, c).map(_.y)
+    private val xs = Vector(a, b, c).map(_.x)
+    private val ys = Vector(a, b, c).map(_.y)
 
-    val x: Double    = xs.sum / 3
-    val y: Double    = ys.sum / 3
+    val x: Double = xs.sum / 3
+    val y: Double = ys.sum / 3
 
     val minX: Double = xs.min
     val maxX: Double = xs.max
@@ -165,16 +167,11 @@ object ClassesAndTraits {
 
   // Three dimensional shapes
 
-  sealed trait Shape3D[T <: Shape3D[T]] extends
-    Shape with
-    Geometric3D with
-    Located3D with
-    Bounded3D with
-    Movable3D[T]
+  sealed trait Shape3D[T <: Shape3D[T]] extends Shape with Geometric3D with Located3D with Bounded3D with Movable3D[T]
 
   sealed trait Geometric3D {
     def surfaceArea: Double
-    def volume: Double
+    def volume:      Double
   }
 
   sealed trait Located3D {
@@ -203,7 +200,9 @@ object ClassesAndTraits {
   }
 
   final case class Point3D(
-    x: Double, y: Double, z: Double
+    x: Double,
+    y: Double,
+    z: Double
   ) extends Shape3D[Point3D] {
     val minX: Double = x
     val maxX: Double = x
@@ -213,7 +212,7 @@ object ClassesAndTraits {
     val maxZ: Double = z
 
     val surfaceArea: Double = 0
-    val volume: Double = 0
+    val volume:      Double = 0
 
     def move(dx: Double, dy: Double, dz: Double): Point3D =
       copy(x + dx, y + dy, z + dz)
@@ -223,7 +222,9 @@ object ClassesAndTraits {
   }
 
   final case class Sphere(
-    x: Double, y: Double, z: Double,
+    x:      Double,
+    y:      Double,
+    z:      Double,
     radius: Double
   ) extends Shape3D[Sphere] {
 
@@ -235,15 +236,19 @@ object ClassesAndTraits {
     val maxZ: Double = z + radius
 
     val surfaceArea: Double = 4 * Pi * radius * radius
-    val volume: Double = 4 * Pi * pow(radius , 3) / 3
+    val volume:      Double = 4 * Pi * pow(radius, 3) / 3
 
     def move(dx: Double, dy: Double, dz: Double): Sphere =
-      copy(x + dx , y + dy , z + dz)
+      copy(x + dx, y + dy, z + dz)
   }
 
   final case class Cuboid(
-    x: Double, y: Double, z: Double,
-    width: Double, height: Double, length: Double
+    x:      Double,
+    y:      Double,
+    z:      Double,
+    width:  Double,
+    height: Double,
+    length: Double
   ) extends Shape3D[Cuboid] {
 
     val minX: Double = x - width / 2
@@ -262,7 +267,9 @@ object ClassesAndTraits {
   }
 
   final case class Cube(
-    x: Double, y: Double, z: Double,
+    x:    Double,
+    y:    Double,
+    z:    Double,
     side: Double
   ) extends Shape3D[Cube] {
 
@@ -274,23 +281,25 @@ object ClassesAndTraits {
     val maxZ: Double = z + side / 2
 
     val surfaceArea: Double = 6 * pow(side, 2)
-    val volume: Double = pow(side, 3)
+    val volume:      Double = pow(side, 3)
 
     def move(dx: Double, dy: Double, dz: Double): Cube =
       copy(x + dx, y + dy, z + dz)
   }
 
   final case class Triangle3D(
-    a: Point3D, b: Point3D, c: Point3D
+    a: Point3D,
+    b: Point3D,
+    c: Point3D
   ) extends Shape3D[Triangle3D] {
 
-    private val xs   = Vector(a, b, c).map(_.x)
-    private val ys   = Vector(a, b, c).map(_.y)
-    private val zs   = Vector(a, b, c).map(_.z)
+    private val xs = Vector(a, b, c).map(_.x)
+    private val ys = Vector(a, b, c).map(_.y)
+    private val zs = Vector(a, b, c).map(_.z)
 
-    val x: Double    = xs.sum / 3
-    val y: Double    = ys.sum / 3
-    val z: Double    = zs.sum / 3
+    val x: Double = xs.sum / 3
+    val y: Double = ys.sum / 3
+    val z: Double = zs.sum / 3
 
     val minX: Double = xs.min
     val maxX: Double = xs.max

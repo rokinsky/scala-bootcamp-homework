@@ -4,7 +4,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers._
 import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 
-import scala.math.{Pi, pow}
+import scala.math.{pow, Pi}
 
 class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks {
   import ClassesAndTraits._
@@ -19,8 +19,8 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
   behavior of "Point2D"
 
   it should "have correct coordinates" in {
-    forAll {
-      (a: Double, b: Double) => {
+    forAll { (a: Double, b: Double) =>
+      {
         val point = Point2D(a, b)
         point.x shouldEqual a
         point.y shouldEqual b
@@ -29,8 +29,8 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
   }
 
   it should "have correct area" in {
-    forAll {
-      (a: Double, b: Double) => {
+    forAll { (a: Double, b: Double) =>
+      {
         Point2D(a, b).area shouldEqual 0
       }
     }
@@ -38,8 +38,8 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
 
   it should "move correctly" in {
     val point = Point2D(0, 0)
-    forAll {
-      (a: Double, b: Double) => {
+    forAll { (a: Double, b: Double) =>
+      {
         point.move(a, b) shouldEqual Point2D(a, b)
         point.move(0, b).move(a, 0) shouldEqual Point2D(a, b)
         point.move(a, 0).move(0, b) shouldEqual Point2D(a, b)
@@ -57,7 +57,7 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
     circle.move(1, 0).move(1, 0).x shouldEqual 2
     circle.move(4, 5).y shouldEqual 5
 
-    Circle(3, 5, 4).move(5,0).x shouldEqual 8
+    Circle(3, 5, 4).move(5, 0).x shouldEqual 8
   }
 
   it should "have correct area" in {
@@ -142,8 +142,8 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
   behavior of "Point3D"
 
   it should "have correct coordinates" in {
-    forAll {
-      (a: Double, b: Double, c: Double) => {
+    forAll { (a: Double, b: Double, c: Double) =>
+      {
         val point = Point3D(a, b, c)
         point.x shouldEqual a
         point.y shouldEqual b
@@ -153,8 +153,8 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
   }
 
   it should "have correct surface area" in {
-    forAll {
-      (a: Double, b: Double, c: Double) => {
+    forAll { (a: Double, b: Double, c: Double) =>
+      {
         Point3D(a, b, c).surfaceArea shouldEqual 0
       }
     }
@@ -162,8 +162,8 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
 
   it should "move correctly" in {
     val point = Point3D(0, 0, 0)
-    forAll {
-      (a: Double, b: Double, c: Double) => {
+    forAll { (a: Double, b: Double, c: Double) =>
+      {
         point.move(a, b, c) shouldEqual Point3D(a, b, c)
         point.move(a, b, c).move(-a, 0, -c) shouldEqual Point3D(0, b, 0)
       }
@@ -174,13 +174,13 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
 
   it should "have correct surface area" in {
     Sphere(3, 4, 5, 10).surfaceArea shouldEqual 1256.63 +- 0.1
-    Sphere(1,1,1,4).surfaceArea shouldEqual 201.06 +- 0.01
+    Sphere(1, 1, 1, 4).surfaceArea shouldEqual 201.06 +- 0.01
     Sphere(0, 0, 0, 10).surfaceArea shouldEqual 1256.637 +- 0.001
   }
 
   it should "have correct volume" in {
     Sphere(3, 3, 3, 3.6278317).volume shouldEqual 200.0 +- 0.00001
-    Sphere(1,1,1,4).volume shouldEqual 268.08 +- 0.01
+    Sphere(1, 1, 1, 4).volume shouldEqual 268.08 +- 0.01
     Sphere(0, 0, 0, 10).volume shouldEqual 4188.79 +- 0.001
   }
 
@@ -249,18 +249,20 @@ class ClassesAndTraitsSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChec
     val triangle1 = Triangle3D(Point3D(0, 0, 0), Point3D(5, 0, 0), Point3D(5, 10, 0))
     triangle1.surfaceArea shouldEqual 25.0 +- 0.001
 
-    val triangle2 = Triangle3D(Point3D(1,1, 0), Point3D(2, 1, 0), Point3D(1, 2, 0))
+    val triangle2 = Triangle3D(Point3D(1, 1, 0), Point3D(2, 1, 0), Point3D(1, 2, 0))
     triangle2.surfaceArea shouldEqual 0.5 +- 0.001
   }
 
   behavior of "Bounded3D"
 
   it should "correct recognize minimum bounding cuboid" in {
-    val mbb = Bounded3D.minimumBoundingCuboid(Set(
-      Point3D(-12, -3, 4),
-      Point3D(1, 7, -4.5),
-      Sphere(4, 0, 5, 5),
-    ))
+    val mbb = Bounded3D.minimumBoundingCuboid(
+      Set(
+        Point3D(-12, -3, 4),
+        Point3D(1, 7, -4.5),
+        Sphere(4, 0, 5, 5),
+      )
+    )
 
     mbb.minX shouldEqual -12
     mbb.maxX shouldEqual 9
