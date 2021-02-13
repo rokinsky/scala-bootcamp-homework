@@ -37,3 +37,9 @@ sbt test
 - [x] *2021-02-08*
   [ControlStructures](src/main/scala/com/evolutiongaming/bootcamp/basics/ControlStructures.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/ControlStructuresSpec.scala))
+
+- [x] *2021-02-10*
+  [Collections](src/main/scala/com/evolutiongaming/bootcamp/basics/Collections.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/CollectionsSpec.scala)),
+  [DataStructures](src/main/scala/com/evolutiongaming/bootcamp/basics/DataStructures.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/DataStructuresSpec.scala))
