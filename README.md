@@ -43,3 +43,6 @@ sbt test
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/CollectionsSpec.scala)),
   [DataStructures](src/main/scala/com/evolutiongaming/bootcamp/basics/DataStructures.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/DataStructuresSpec.scala))
+
+- [x] *2021-02-17*
+  [sbt](https://github.com/rokinsky/sbt-bulky-sources)
