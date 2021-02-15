@@ -101,7 +101,7 @@ object AlgebraicDataTypes {
     def of(cards: => List[Card]): Either[ErrorMessage, Hand] = cards.size match {
       case 2 => Right(new HoldemHand(cards) {})
       case 4 => Right(new OmahaHand(cards) {})
-      case _ => Left(ErrorMessage(s"Invalid Hand Size '$cards.size"))
+      case _ => Left(ErrorMessage(s"Invalid Hand Size '${cards.size}'"))
     }
   }
 
