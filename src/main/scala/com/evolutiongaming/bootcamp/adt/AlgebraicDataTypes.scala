@@ -16,7 +16,16 @@ object AlgebraicDataTypes {
   //
   // Make sure the defined model protects against invalid data. Use value classes and smart constructors as
   // appropriate. Place the solution under `adt` package in your homework repository.
-  final case class ErrorMessage(value: String) extends AnyVal
+  sealed abstract class ErrorMessage private (val value: String)
+  object ErrorMessage {
+    final case class InvalidSuit(suit: Char) extends ErrorMessage(s"Invalid Suit '$suit'")
+    final case class InvalidRank(rank: Char) extends ErrorMessage(s"Invalid Rank '$rank'")
+    final case class InvalidCard(card: String) extends ErrorMessage(s"Invalid Card '$card'")
+    final case class InvalidBoard(board: List[String]) extends ErrorMessage(s"Invalid Board '${board.mkString}'")
+    final case class InvalidBoardSize(size: Int) extends ErrorMessage(s"Invalid Board Size '$size'")
+    final case class InvalidHand(hand: List[String]) extends ErrorMessage(s"Invalid Hand '${hand.mkString}'")
+    final case class InvalidHandSize(size: Int) extends ErrorMessage(s"Invalid Card '$size'")
+  }
 
   sealed trait Suit
   object Suit {
@@ -33,24 +42,24 @@ object AlgebraicDataTypes {
     )
 
     def of(suit: Char): Either[ErrorMessage, Suit] =
-      suits.get(suit).toRight(ErrorMessage(s"Invalid Suit '$suit'"))
+      suits.get(suit).toRight(ErrorMessage.InvalidSuit(suit))
   }
 
-  sealed abstract case class Rank private (worth: Int)
+  sealed abstract class Rank private (val worth: Int)
   object Rank {
-    object Two extends Rank(0)
-    object Three extends Rank(1)
-    object Four extends Rank(2)
-    object Five extends Rank(3)
-    object Six extends Rank(4)
-    object Seven extends Rank(5)
-    object Eight extends Rank(6)
-    object Nine extends Rank(7)
-    object Ten extends Rank(8)
-    object Jack extends Rank(9)
-    object Queen extends Rank(10)
-    object King extends Rank(11)
-    object Ace extends Rank(12)
+    case object Two extends Rank(0)
+    case object Three extends Rank(1)
+    case object Four extends Rank(2)
+    case object Five extends Rank(3)
+    case object Six extends Rank(4)
+    case object Seven extends Rank(5)
+    case object Eight extends Rank(6)
+    case object Nine extends Rank(7)
+    case object Ten extends Rank(8)
+    case object Jack extends Rank(9)
+    case object Queen extends Rank(10)
+    case object King extends Rank(11)
+    case object Ace extends Rank(12)
 
     private val ranks = Map(
       '2' -> Two,
@@ -69,14 +78,14 @@ object AlgebraicDataTypes {
     )
 
     def of(rank: Char): Either[ErrorMessage, Rank] =
-      ranks.get(rank).toRight(ErrorMessage(s"Invalid Rank '$rank'"))
+      ranks.get(rank).toRight(ErrorMessage.InvalidRank(rank))
   }
 
   sealed abstract case class Card private (rank: Rank, suit: Suit)
   object Card {
     def of(card: String): Either[ErrorMessage, Card] = card.toList match {
       case rank :: suit :: Nil => of(rank, suit)
-      case _                   => Left(ErrorMessage(s"Invalid Card '$card'"))
+      case _                   => Left(ErrorMessage.InvalidCard(card))
     }
 
     def of(rank: Char, suit: Char): Either[ErrorMessage, Card] = for {
@@ -95,13 +104,13 @@ object AlgebraicDataTypes {
 
     def of(cards: List[String]): Either[ErrorMessage, Hand] = cards.partitionMap(Card.of) match {
       case (Nil, verifiedCards) => of(verifiedCards)
-      case _                    => Left(ErrorMessage(s"Invalid Hand '$cards'"))
+      case _                    => Left(ErrorMessage.InvalidHand(cards))
     }
 
     def of(cards: => List[Card]): Either[ErrorMessage, Hand] = cards.size match {
       case 2 => Right(new HoldemHand(cards) {})
       case 4 => Right(new OmahaHand(cards) {})
-      case _ => Left(ErrorMessage(s"Invalid Hand Size '${cards.size}'"))
+      case _ => Left(ErrorMessage.InvalidHandSize(cards.size))
     }
   }
 
@@ -111,26 +120,26 @@ object AlgebraicDataTypes {
 
     def of(cards: List[String]): Either[ErrorMessage, Board] = cards.partitionMap(Card.of) match {
       case (Nil, verifiedCards) => of(verifiedCards)
-      case _                    => Left(ErrorMessage(s"Invalid Board '$cards'"))
+      case _                    => Left(ErrorMessage.InvalidBoard(cards))
     }
 
     def of(cards: => List[Card]): Either[ErrorMessage, Board] =
-      Either.cond(cards.size == 5, new Board(cards) {}, ErrorMessage(s"Invalid Board Size '${cards.size}'"))
+      Either.cond(cards.size == 5, new Board(cards) {}, ErrorMessage.InvalidBoardSize(cards.size))
   }
 
   sealed trait PokerCombination {
     def worth: Int
   }
   object PokerCombination {
-    sealed abstract case class HighCard(worth: Int = 0, kickers: List[Rank]) extends PokerCombination
-    sealed abstract case class Pair(worth: Int = 1, pair: Rank, kickers: List[Rank]) extends PokerCombination
-    sealed abstract case class TwoPairs(worth: Int = 2, pairs: List[Rank], kicker: Rank) extends PokerCombination
-    sealed abstract case class ThreeOfAKind(worth: Int = 3, triplet: Rank, kickers: List[Rank]) extends PokerCombination
-    sealed abstract case class Straight(worth: Int = 4, highest: Rank) extends PokerCombination
-    sealed abstract case class Flush(worth: Int = 5, ranks: List[Rank]) extends PokerCombination
-    sealed abstract case class FullHouse(worth: Int = 6, triplet: Rank, pair: Rank) extends PokerCombination
-    sealed abstract case class FourOfAKind(worth: Int = 7, quartet: Rank, kicker: Rank) extends PokerCombination
-    sealed abstract case class StraightFlush(worth: Int = 8, highest: Rank) extends PokerCombination
+    sealed abstract case class HighCard(kickers: List[Rank], worth: Int = 0) extends PokerCombination
+    sealed abstract case class Pair(pair: Rank, kickers: List[Rank], worth: Int = 1) extends PokerCombination
+    sealed abstract case class TwoPairs(pairs: List[Rank], kicker: Rank, worth: Int = 2) extends PokerCombination
+    sealed abstract case class ThreeOfAKind(triplet: Rank, kickers: List[Rank], worth: Int = 3) extends PokerCombination
+    sealed abstract case class Straight(highest: Rank, worth: Int = 4) extends PokerCombination
+    sealed abstract case class Flush(ranks: List[Rank], worth: Int = 5) extends PokerCombination
+    sealed abstract case class FullHouse(triplet: Rank, pair: Rank, worth: Int = 6) extends PokerCombination
+    sealed abstract case class FourOfAKind(quartet: Rank, kicker: Rank, worth: Int = 7) extends PokerCombination
+    sealed abstract case class StraightFlush(highest: Rank, worth: Int = 8) extends PokerCombination
   }
 
   sealed trait TestCase
