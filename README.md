@@ -43,3 +43,7 @@ sbt test
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/CollectionsSpec.scala)),
   [DataStructures](src/main/scala/com/evolutiongaming/bootcamp/basics/DataStructures.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/DataStructuresSpec.scala))
+
+- [x] *2021-02-24*
+  [Implicits](src/main/scala/com/evolutiongaming/bootcamp/typeclass/Implicits.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsSpec.scala))
