@@ -35,11 +35,11 @@ class ImplicitsSpec extends AnyFreeSpec with ScalaCheckDrivenPropertyChecks {
     import Task3._
     import ParseSyntax._
     import ParseInstances._
-    "when to handle invalid parsing data" in {
+    "when parsing invalid data" in {
       "lalala".parse[User].isLeft shouldBe true
     }
 
-    "when the correct data needs to be parsed correctly" in {
+    "when parsing correct data" in {
       "1;Oleg".parse[User] shouldEqual Right(User("1", "Oleg"))
     }
   }
