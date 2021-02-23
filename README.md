@@ -44,6 +44,13 @@ sbt test
   [DataStructures](src/main/scala/com/evolutiongaming/bootcamp/basics/DataStructures.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/basics/DataStructuresSpec.scala))
 
+- [x] *2021-02-15*
+  [AlgebraicDataTypes](src/main/scala/com/evolutiongaming/bootcamp/adt/AlgebraicDataTypes.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/adt/AlgebraicDataTypesSpec.scala))
+
+- [x] *2021-02-19*
+  [sbt](https://github.com/rokinsky/sbt-bulky-sources)
+
 - [x] *2021-02-24*
   [Implicits](src/main/scala/com/evolutiongaming/bootcamp/typeclass/Implicits.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsSpec.scala))
