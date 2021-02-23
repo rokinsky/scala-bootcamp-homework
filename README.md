@@ -47,3 +47,6 @@ sbt test
 - [x] *2021-02-15*
   [AlgebraicDataTypes](src/main/scala/com/evolutiongaming/bootcamp/adt/AlgebraicDataTypes.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/adt/AlgebraicDataTypesSpec.scala))
+
+- [x] *2021-02-19*
+  [sbt](https://github.com/rokinsky/sbt-bulky-sources)
