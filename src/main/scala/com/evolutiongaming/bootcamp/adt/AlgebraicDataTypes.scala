@@ -98,8 +98,8 @@ object AlgebraicDataTypes {
     def cards: List[Card]
   }
   object Hand {
-    sealed abstract case class HoldemHand(cards: List[Card]) extends Hand
-    sealed abstract case class OmahaHand(cards: List[Card]) extends Hand
+    sealed abstract case class HoldemHand protected (cards: List[Card]) extends Hand
+    sealed abstract case class OmahaHand protected (cards: List[Card]) extends Hand
     def of(cards: String): Either[ErrorMessage, Hand] = of(cards.grouped(2).toList)
 
     def of(cards: List[String]): Either[ErrorMessage, Hand] = cards.partitionMap(Card.of) match {
@@ -127,26 +127,20 @@ object AlgebraicDataTypes {
       Either.cond(cards.size == 5, new Board(cards) {}, ErrorMessage.InvalidBoardSize(cards.size))
   }
 
-  sealed trait PokerCombination {
-    def worth: Int
-  }
+  sealed abstract class PokerCombination(val worth: Int)
   object PokerCombination {
-    sealed abstract case class HighCard(kickers: List[Rank], worth: Int = 0) extends PokerCombination
-    sealed abstract case class Pair(pair: Rank, kickers: List[Rank], worth: Int = 1) extends PokerCombination
-    sealed abstract case class TwoPairs(pairs: List[Rank], kicker: Rank, worth: Int = 2) extends PokerCombination
-    sealed abstract case class ThreeOfAKind(triplet: Rank, kickers: List[Rank], worth: Int = 3) extends PokerCombination
-    sealed abstract case class Straight(highest: Rank, worth: Int = 4) extends PokerCombination
-    sealed abstract case class Flush(ranks: List[Rank], worth: Int = 5) extends PokerCombination
-    sealed abstract case class FullHouse(triplet: Rank, pair: Rank, worth: Int = 6) extends PokerCombination
-    sealed abstract case class FourOfAKind(quartet: Rank, kicker: Rank, worth: Int = 7) extends PokerCombination
-    sealed abstract case class StraightFlush(highest: Rank, worth: Int = 8) extends PokerCombination
+    sealed abstract case class HighCard protected (kickers: List[Rank]) extends PokerCombination(0)
+    sealed abstract case class Pair protected (pair: Rank, kickers: List[Rank]) extends PokerCombination(1)
+    sealed abstract case class TwoPairs protected (pairs: List[Rank], kicker: Rank) extends PokerCombination(2)
+    sealed abstract case class ThreeOfAKind protected (triplet: Rank, kickers: List[Rank]) extends PokerCombination(3)
+    sealed abstract case class Straight protected (highest: Rank) extends PokerCombination(4)
+    sealed abstract case class Flush protected (ranks: List[Rank]) extends PokerCombination(5)
+    sealed abstract case class FullHouse protected (triplet: Rank, pair: Rank) extends PokerCombination(6)
+    sealed abstract case class FourOfAKind protected (quartet: Rank, kicker: Rank) extends PokerCombination(7)
+    sealed abstract case class StraightFlush protected (highest: Rank) extends PokerCombination(8)
   }
 
-  sealed trait TestCase
-  object TestCase {
-    sealed abstract case class TexasCase(board: Board, hands: List[Hand]) extends TestCase
-    sealed abstract case class OmahaCase(board: Board, hands: List[Hand]) extends TestCase
-  }
+  sealed abstract case class TestCase private (board: Board, hands: List[Hand])
 
   sealed abstract case class TestResult private (sortedHands: List[(Hand, PokerCombination)])
 }
