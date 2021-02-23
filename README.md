@@ -50,3 +50,7 @@ sbt test
 
 - [x] *2021-02-19*
   [sbt](https://github.com/rokinsky/sbt-bulky-sources)
+
+- [x] *2021-02-24*
+  [Implicits](src/main/scala/com/evolutiongaming/bootcamp/typeclass/Implicits.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsSpec.scala))
