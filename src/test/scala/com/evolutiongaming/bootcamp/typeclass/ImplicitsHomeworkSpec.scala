@@ -1,6 +1,9 @@
 package com.evolutiongaming.bootcamp.typeclass
 
+import com.evolutiongaming.bootcamp.typeclass.ImplicitsHomework.MyTwitter._
 import com.evolutiongaming.bootcamp.typeclass.ImplicitsHomework.SuperVipCollections4s._
+import com.evolutiongaming.bootcamp.typeclass.ImplicitsHomework.SuperVipCollections4s.instances._
+import com.evolutiongaming.bootcamp.typeclass.ImplicitsHomework.SuperVipCollections4s.syntax._
 import com.evolutiongaming.bootcamp.typeclass.ImplicitsHomeworkSpec.TestValue
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -40,6 +43,11 @@ class ImplicitsHomeworkSpec extends AnyFreeSpec with Matchers {
       cache.get(val2) shouldEqual None
       cache.get(val1) shouldEqual Some(val1)
       cache.get(val4) shouldEqual Some(val4)
+    }
+    "when a pair can't be added without violating should be safe" in {
+      val cache = new MutableBoundedCache[TestValue, TestValue](maxSizeScore = 0)
+
+      cache.put(val1, val1)
     }
   }
 
@@ -138,7 +146,7 @@ class ImplicitsHomeworkSpec extends AnyFreeSpec with Matchers {
       hashTags   = Vector.empty, //12
       attributes = PackedMultiMap.empty, //12
       fbiNotes   = Nil, //12
-    ) //first entry score: 8 *2 + 4*12 + 4 = 68
+    ) //first entry score: 8 + 4*12 + 4 = 60
 
     val id2 = 2L
     val twit2 = Twit(
@@ -153,7 +161,7 @@ class ImplicitsHomeworkSpec extends AnyFreeSpec with Matchers {
           watchedPewDiePieTimes = 2568L, //+8
         )
       )
-    ) //second entry score: 68 + 24 + 56 + 12 + 30 + 2 + 8 = 200
+    ) //second entry score: 60 + 24 + 56 + 12 + 30 + 2 + 8 = 192
 
     "should limit the size score of data stored" in {
       val cache = createTwitCache(maxSizeScore = 200)
@@ -164,6 +172,11 @@ class ImplicitsHomeworkSpec extends AnyFreeSpec with Matchers {
       cache.put(twit2)
       cache.get(id1) shouldEqual None
       cache.get(id2) shouldEqual Some(twit2)
+    }
+
+    "should have correct twit score sizes" in {
+      twit1.sizeScore shouldEqual 60
+      twit2.sizeScore shouldEqual 192
     }
   }
 }
