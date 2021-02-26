@@ -1,6 +1,5 @@
 package com.evolutiongaming.bootcamp.typeclass
 
-import scala.annotation.tailrec
 import scala.collection.immutable.ArraySeq
 import scala.collection.mutable
 
@@ -85,9 +84,9 @@ object ImplicitsHomework {
       def put(key: K, value: V): Unit =
         putOption(key, value).orElse(pop().map(_ => put(key, value)))
 
-      @tailrec
-      def put2(key: K, value: V): Unit =
-        if (putOption(key, value).isEmpty && pop().nonEmpty) put2(key, value)
+      //@tailrec
+      //def put(key: K, value: V): Unit =
+      //  if (putOption(key, value).isEmpty && pop().nonEmpty) put(key, value)
 
       def get(key: K): Option[V] = map.get(key)
     }
