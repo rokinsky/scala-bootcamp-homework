@@ -81,9 +81,13 @@ object ImplicitsHomework {
       private def pop(): Option[map.type] =
         map.keys.headOption.map(map -= _)
 
-      @tailrec
+      // FIXME: Which version is better? This one is cleaner but without tailrec optimization
       def put(key: K, value: V): Unit =
-        if (putOption(key, value).isEmpty && pop().nonEmpty) put(key, value)
+        putOption(key, value).orElse(pop().map(_ => put(key, value)))
+
+      @tailrec
+      def put2(key: K, value: V): Unit =
+        if (putOption(key, value).isEmpty && pop().nonEmpty) put2(key, value)
 
       def get(key: K): Option[V] = map.get(key)
     }
