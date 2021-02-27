@@ -178,14 +178,14 @@ object ImplicitsHomework {
             Iterate2[F].iterator2(fts).map(_.sizeScore).sum
 
       object cc {
-        implicit val HNilGetSizeScore: GetSizeScore[HNil] = _ => ObjectHeaderSize
-        implicit def HListGetSizeScore[H: GetSizeScore, T <: HList: GetSizeScore]: GetSizeScore[H :: T] = l =>
-          GetSizeScore[H].apply(l.head) + GetSizeScore[T].apply(l.tail)
+        implicit val hNilGetSizeScore: GetSizeScore[HNil] = _ => ObjectHeaderSize
+        implicit def hListGetSizeScore[H: GetSizeScore, T <: HList: GetSizeScore]: GetSizeScore[H :: T] = hl =>
+          GetSizeScore[H].apply(hl.head) + GetSizeScore[T].apply(hl.tail)
 
-        implicit def CaseClassGetSizeScore[CC, HL <: HList](
+        implicit def caseClassGetSizeScore[CC, HL <: HList](
           implicit gen: Generic.Aux[CC, HL],
-          hListC:       GetSizeScore[HL]
-        ): GetSizeScore[CC] = cc => hListC.apply(gen.to(cc))
+          hListGSS:     GetSizeScore[HL]
+        ): GetSizeScore[CC] = cc => hListGSS.apply(gen.to(cc))
       }
     }
   }
