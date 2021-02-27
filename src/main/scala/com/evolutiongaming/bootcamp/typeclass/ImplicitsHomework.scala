@@ -1,5 +1,7 @@
 package com.evolutiongaming.bootcamp.typeclass
 
+import shapeless.{::, Generic, HList, HNil}
+
 import scala.collection.immutable.ArraySeq
 import scala.collection.mutable
 
@@ -174,6 +176,20 @@ object ImplicitsHomework {
           ObjectHeaderSize +
             Iterate2[F].iterator1(fts).map(_.sizeScore).sum +
             Iterate2[F].iterator2(fts).map(_.sizeScore).sum
+
+      object cc {
+        implicit val HNilGetSizeScore: GetSizeScore[HNil] = _ => ObjectHeaderSize
+        implicit def HListGetSizeScore[H, T <: HList](
+          implicit
+          headSizeScore: GetSizeScore[H],
+          tailSizeScore: GetSizeScore[T]
+        ): GetSizeScore[H :: T] = l => headSizeScore.apply(l.head) + tailSizeScore.apply(l.tail)
+
+        implicit def CaseClassGetSizeScore[CC, HL <: HList](
+          implicit gen: Generic.Aux[CC, HL],
+          hListC:       GetSizeScore[HL]
+        ): GetSizeScore[CC] = cc => hListC.apply(gen.to(cc))
+      }
     }
   }
 
@@ -184,7 +200,7 @@ object ImplicitsHomework {
   object MyTwitter {
     import SuperVipCollections4s._
     import instances._
-    import syntax._
+    import cc._
 
     final case class Twit(
       id:         Long,
@@ -204,18 +220,6 @@ object ImplicitsHomework {
       def put(twit: Twit): Unit
       def get(id:   Long): Option[Twit]
     }
-
-    implicit val fbiNoteGetSizeScore: GetSizeScore[FbiNote] = {
-      case FbiNote(month, favouriteChar, watchedPewDiePieTimes) =>
-        ObjectHeaderSize + month.sizeScore + favouriteChar.sizeScore + watchedPewDiePieTimes.sizeScore
-    }
-
-    // format: off
-    implicit val twitGetSizeScore: GetSizeScore[Twit] = {
-      case Twit(id, userId, hashTags, attributes, fbiNotes) =>
-        ObjectHeaderSize + id.sizeScore + userId.sizeScore + hashTags.sizeScore + attributes.sizeScore + fbiNotes.sizeScore
-    }
-    // format: on
 
     /*
     Return an implementation based on MutableBoundedCache[Long, Twit]

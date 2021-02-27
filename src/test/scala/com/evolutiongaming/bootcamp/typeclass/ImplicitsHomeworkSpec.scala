@@ -175,6 +175,7 @@ class ImplicitsHomeworkSpec extends AnyFreeSpec with Matchers {
     }
 
     "should have correct twit score sizes" in {
+      import cc._
       twit1.sizeScore shouldEqual 60
       twit2.sizeScore shouldEqual 192
     }
