@@ -179,11 +179,8 @@ object ImplicitsHomework {
 
       object cc {
         implicit val HNilGetSizeScore: GetSizeScore[HNil] = _ => ObjectHeaderSize
-        implicit def HListGetSizeScore[H, T <: HList](
-          implicit
-          headSizeScore: GetSizeScore[H],
-          tailSizeScore: GetSizeScore[T]
-        ): GetSizeScore[H :: T] = l => headSizeScore.apply(l.head) + tailSizeScore.apply(l.tail)
+        implicit def HListGetSizeScore[H: GetSizeScore, T <: HList: GetSizeScore]: GetSizeScore[H :: T] = l =>
+          GetSizeScore[H].apply(l.head) + GetSizeScore[T].apply(l.tail)
 
         implicit def CaseClassGetSizeScore[CC, HL <: HList](
           implicit gen: Generic.Aux[CC, HL],
