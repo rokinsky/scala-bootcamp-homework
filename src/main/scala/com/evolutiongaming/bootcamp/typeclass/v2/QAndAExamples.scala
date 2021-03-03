@@ -34,15 +34,15 @@ object QAndAExamples {
   // 4.4. Implement Semigroupal for Map
   implicit def functorMap[T]: Functor[Map[T, *]] = new Functor[Map[T, *]] {
     override def fmap[A, B](fa: Map[T, A])(f: A => B): Map[T, B] =
-      fa.transform((_, value) => f(value))
+      fa.transform((_, a) => f(a))
   }
 
   implicit def semigroupalMap[T]: Semigroupal[Map[T, *]] = new Semigroupal[Map[T, *]] {
     override def product[A, B](fa: Map[T, A], fb: Map[T, B]): Map[T, (A, B)] =
       for {
-        (fak, fav) <- fa
-        fbv        <- fb.get(fak)
-      } yield fak -> (fav, fbv)
+        (t, a) <- fa
+        b      <- fb.get(t)
+      } yield t -> (a, b)
   }
 
   // 5. Applicative
