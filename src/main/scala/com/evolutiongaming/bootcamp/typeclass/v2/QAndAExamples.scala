@@ -59,8 +59,8 @@ object QAndAExamples {
     override def pure[A](x: A): Option[A] = Some(x)
 
     override def product[A, B](fa: Option[A], fb: Option[B]): Option[(A, B)] = (fa, fb) match {
-      case (Some(fav), Some(fbv)) => Some((fav, fbv))
-      case _                      => None
+      case (Some(a), Some(b)) => Some((a, b))
+      case _                  => None
     }
 
     override def fmap[A, B](fa: Option[A])(f: A => B): Option[B] = fa.map(f)
@@ -70,9 +70,9 @@ object QAndAExamples {
     override def pure[A](x: A): Either[T, A] = Right(x)
 
     override def product[A, B](fa: Either[T, A], fb: Either[T, B]): Either[T, (A, B)] = (fa, fb) match {
-      case (Right(far), Right(fbr)) => Right((far, fbr))
-      case (Left(fal), _)           => Left(fal)
-      case (_, Left(fbl))           => Left(fbl)
+      case (Right(a), Right(b)) => Right((a, b))
+      case (Left(t), _)         => Left(t)
+      case (_, Left(t))         => Left(t)
     }
 
     override def fmap[A, B](fa: Either[T, A])(f: A => B): Either[T, B] = fa.map(f)
