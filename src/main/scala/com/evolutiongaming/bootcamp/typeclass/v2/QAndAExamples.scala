@@ -21,8 +21,8 @@ object QAndAExamples {
     def apply[F[_]: Semigroupal]: Semigroupal[F] = implicitly
   }
 
-  implicit class SemigroupalOps[F[_]: Semigroupal, A](x: F[A]) {
-    def product[B](y: F[B]): F[(A, B)] = Semigroupal[F].product(x, y)
+  implicit class SemigroupalOps[F[_]: Semigroupal, A](fa: F[A]) {
+    def product[B](fb: F[B]): F[(A, B)] = Semigroupal[F].product(fa, fb)
   }
 
   implicit class MapNOps[F[_]: Functor: Semigroupal, A, B](x: (F[A], F[B])) {
@@ -47,7 +47,7 @@ object QAndAExamples {
 
   // 5. Applicative
   trait Applicative[F[_]] extends Semigroupal[F] with Functor[F] {
-    def pure[A](x: A): F[A]
+    def pure[A](a: A): F[A]
   }
 
   object Applicative {
@@ -56,7 +56,7 @@ object QAndAExamples {
 
   // 5.1. Implement Applicative for Option, Either
   implicit val optionApplicative: Applicative[Option] = new Applicative[Option] {
-    override def pure[A](x: A): Option[A] = Some(x)
+    override def pure[A](a: A): Option[A] = Some(a)
 
     override def product[A, B](fa: Option[A], fb: Option[B]): Option[(A, B)] = (fa, fb) match {
       case (Some(a), Some(b)) => Some((a, b))
@@ -67,7 +67,7 @@ object QAndAExamples {
   }
 
   implicit def eitherApplicative[T]: Applicative[Either[T, *]] = new Applicative[Either[T, *]] {
-    override def pure[A](x: A): Either[T, A] = Right(x)
+    override def pure[A](a: A): Either[T, A] = Right(a)
 
     override def product[A, B](fa: Either[T, A], fb: Either[T, B]): Either[T, (A, B)] = (fa, fb) match {
       case (Right(a), Right(b)) => Right((a, b))
@@ -85,7 +85,7 @@ object QAndAExamples {
   // 6. Foldable
   // 6.1. Implement Foldable with `foldLeft`
   trait Foldable[F[_]] {
-    def foldLeft[A, B](fa: F[A], z: B)(f: (B, A) => B): B
+    def foldLeft[A, B](fa: F[A], b: B)(f: (B, A) => B): B
   }
 
   object Foldable {
@@ -93,13 +93,13 @@ object QAndAExamples {
   }
 
   implicit class FoldableOps[F[_]: Foldable, A](fa: F[A]) {
-    def foldLeft[B](z: B)(f: (B, A) => B): B = Foldable[F].foldLeft(fa, z)(f)
+    def foldLeft[B](b: B)(f: (B, A) => B): B = Foldable[F].foldLeft(fa, b)(f)
   }
 
   // 6.2. Implement Foldable for List
   // Note: we can use here foldLeft from standard library
   implicit val listFoldable: Foldable[List] = new Foldable[List] {
-    override def foldLeft[A, B](fa: List[A], z: B)(f: (B, A) => B): B = fa.foldLeft(z)(f)
+    override def foldLeft[A, B](fa: List[A], b: B)(f: (B, A) => B): B = fa.foldLeft(b)(f)
   }
 
   // 6.3. Implement `traverse` for all Foldables instead of List
