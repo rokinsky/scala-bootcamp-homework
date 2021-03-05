@@ -54,3 +54,7 @@ sbt test
 - [x] *2021-02-24*
   [Implicits](src/main/scala/com/evolutiongaming/bootcamp/typeclass/Implicits.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsSpec.scala))
+
+- [x] *2021-03-10*
+  [ErrorHandling](src/main/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandling.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandlingSpec.scala))
