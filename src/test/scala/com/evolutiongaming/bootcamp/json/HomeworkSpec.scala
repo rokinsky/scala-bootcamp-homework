@@ -2,10 +2,10 @@ package com.evolutiongaming.bootcamp.json
 
 import cats.instances.either._
 import cats.instances.list._
-import cats.syntax.either._
 import cats.syntax.traverse._
 import io.circe
 import io.circe.Decoder
+import io.circe.Decoder.decodeLocalDateWithFormatter
 import io.circe.generic.JsonCodec
 import io.circe.generic.extras.{Configuration, ConfiguredJsonCodec, JsonKey}
 import io.circe.parser._
@@ -61,13 +61,8 @@ class HomeworkSpec extends AnyWordSpec with Matchers with EitherValues {
 }
 
 object HomeworkSpec {
-  implicit val config: Configuration = Configuration.default
-
-  implicit val dateDecoder: Decoder[LocalDate] = Decoder.decodeString.emap { str =>
-    Either
-      .catchNonFatal(LocalDate.parse(str, DateTimeFormatter.BASIC_ISO_DATE))
-      .leftMap(err => "Local date: " + err.getMessage)
-  }
+  implicit val config:      Configuration      = Configuration.default
+  implicit val dateDecoder: Decoder[LocalDate] = decodeLocalDateWithFormatter(DateTimeFormatter.BASIC_ISO_DATE)
 
   @ConfiguredJsonCodec final case class TeamTotals(
     assists:                                                 String,
