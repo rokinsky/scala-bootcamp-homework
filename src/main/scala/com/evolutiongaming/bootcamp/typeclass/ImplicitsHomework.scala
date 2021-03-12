@@ -2,6 +2,7 @@ package com.evolutiongaming.bootcamp.typeclass
 
 import shapeless.{::, Generic, HList, HNil}
 
+import scala.annotation.tailrec
 import scala.collection.immutable.ArraySeq
 import scala.collection.mutable
 
@@ -76,19 +77,15 @@ object ImplicitsHomework {
       private def canPut(key: K, value: V): Boolean =
         currentSizeScore + key.sizeScore + value.sizeScore <= maxSizeScore
 
-      private def putOption(key: K, value: V): Option[map.type] =
-        Option.when(canPut(key, value))(map += (key -> value))
+      private def putOption(key: K, value: V): Option[Unit] =
+        Option.when(canPut(key, value))(map.addOne(key -> value))
 
-      private def pop(): Option[map.type] =
-        map.keys.headOption.map(map -= _)
+      private def pop(): Option[Unit] =
+        map.keys.headOption.map(map.remove)
 
-      // FIXME: Which version is better? This one is cleaner but without tailrec optimization
+      @tailrec
       def put(key: K, value: V): Unit =
-        putOption(key, value).orElse(pop().map(_ => put(key, value)))
-
-      //@tailrec
-      //def put(key: K, value: V): Unit =
-      //  if (putOption(key, value).isEmpty && pop().nonEmpty) put(key, value)
+        if (putOption(key, value).isEmpty && pop().nonEmpty) put(key, value)
 
       def get(key: K): Option[V] = map.get(key)
     }
