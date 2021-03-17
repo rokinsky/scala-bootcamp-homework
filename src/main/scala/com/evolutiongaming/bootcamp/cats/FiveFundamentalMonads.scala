@@ -60,14 +60,13 @@ object FiveFundamentalMonads {
 
   case class Writer[W, A](run: (W, A))
   object Writer {
-    implicit def readerMonad[W](implicit m: Monoid[W]): Monad[Writer[W, *]] = new Monad[Writer[W, *]] {
+    implicit def writerMonad[W](implicit m: Monoid[W]): Monad[Writer[W, *]] = new Monad[Writer[W, *]] {
       def unit[A](a: A): Writer[W, A] = Writer(m.mempty, a)
 
-      def bind[A, B](ma: Writer[W, A])(amb: A => Writer[W, B]): Writer[W, B] = ma.run match {
-        case (w1, a1) =>
-          amb(a1).run match {
-            case (w2, a2) => Writer(m.mappend(w1)(w2), a2)
-          }
+      def bind[A, B](ma: Writer[W, A])(amb: A => Writer[W, B]): Writer[W, B] = {
+        val (w1, a1) = ma.run
+        val (w2, a2) = amb(a1).run
+        Writer(m.mappend(w1)(w2), a2)
       }
     }
   }
