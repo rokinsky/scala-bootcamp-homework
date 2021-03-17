@@ -54,3 +54,9 @@ sbt test
 - [x] *2021-02-24*
   [Implicits](src/main/scala/com/evolutiongaming/bootcamp/typeclass/Implicits.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsSpec.scala))
+
+- [x] *2021-03-22*
+  [TypeHierarchy](src/main/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchy.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchySpec.scala)),
+  [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
