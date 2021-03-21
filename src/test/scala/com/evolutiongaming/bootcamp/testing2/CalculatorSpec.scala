@@ -92,6 +92,12 @@ class CalculatorSpec extends AnyPropSpec with Matchers {
     }
   }
 
+  property("divide should be correct for zero divisor") {
+    forAll { (x: Int) =>
+      div(const(x), const(0)) shouldBe None
+    }
+  }
+
   property("divide should follow division by itself") {
     forAll { (x: Int) =>
       whenever(x != 0) {
