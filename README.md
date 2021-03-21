@@ -61,3 +61,9 @@ sbt test
 
 - [x] *2021-03-15*
   [JSON](src/test/scala/com/evolutiongaming/bootcamp/json/HomeworkSpec.scala)
+
+- [x] *2021-03-22*
+  [TypeHierarchy](src/main/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchy.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchySpec.scala)),
+  [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
