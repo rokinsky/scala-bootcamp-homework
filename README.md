@@ -59,6 +59,10 @@ sbt test
   [ImplicitsHomework](src/main/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsHomework.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsHomeworkSpec.scala))
 
+- [x] *2021-03-10*
+  [ErrorHandling](src/main/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandling.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandlingSpec.scala))
+
 - [x] *2021-03-15*
   [JSON](src/test/scala/com/evolutiongaming/bootcamp/json/HomeworkSpec.scala)
 
