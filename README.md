@@ -55,6 +55,19 @@ sbt test
   [Implicits](src/main/scala/com/evolutiongaming/bootcamp/typeclass/Implicits.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsSpec.scala))
 
+- [x] *2021-03-03*
+  [ImplicitsHomework](src/main/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsHomework.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsHomeworkSpec.scala))
+
 - [x] *2021-03-10*
   [ErrorHandling](src/main/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandling.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandlingSpec.scala))
+
+- [x] *2021-03-15*
+  [JSON](src/test/scala/com/evolutiongaming/bootcamp/json/HomeworkSpec.scala)
+
+- [x] *2021-03-22*
+  [TypeHierarchy](src/main/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchy.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchySpec.scala)),
+  [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
