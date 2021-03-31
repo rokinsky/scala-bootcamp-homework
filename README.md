@@ -71,3 +71,7 @@ sbt test
   ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchySpec.scala)),
   [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
+
+- [x] *2021-04-05*
+  [EffectsHomework1](src/main/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1Spec.scala)),
