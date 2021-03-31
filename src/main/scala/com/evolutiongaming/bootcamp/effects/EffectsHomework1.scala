@@ -43,7 +43,7 @@ object EffectsHomework1 {
     def option: IO[Option[A]] = attempt.map(_.toOption)
 
     def handleErrorWith[AA >: A](f: Throwable => IO[AA]): IO[AA] =
-      Try(run()).fold(f, IO(_))
+      attempt.flatMap(_.fold(f, IO(_)))
 
     def redeem[B](recover: Throwable => B, map: A => B): IO[B] =
       attempt.map(_.fold(recover, map))
@@ -59,7 +59,7 @@ object EffectsHomework1 {
   object IO {
     def apply[A](body: => A): IO[A] = delay(body)
 
-    def suspend[A](thunk: => IO[A]): IO[A] = thunk
+    def suspend[A](thunk: => IO[A]): IO[A] = IO(thunk.unsafeRunSync())
 
     def delay[A](body: => A): IO[A] = new IO(() => body)
 
@@ -79,7 +79,7 @@ object EffectsHomework1 {
     def raiseError[A](e: Throwable): IO[A] = IO(throw e)
 
     def raiseUnless(cond: Boolean)(e: => Throwable): IO[Unit] =
-      raiseWhen(!cond)(e)
+      unlessA(cond)(raiseError(e))
 
     def raiseWhen(cond: Boolean)(e: => Throwable): IO[Unit] =
       whenA(cond)(raiseError(e))
