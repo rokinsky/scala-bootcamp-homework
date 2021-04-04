@@ -59,7 +59,7 @@ object EffectsHomework1 {
   object IO {
     def apply[A](body: => A): IO[A] = delay(body)
 
-    def suspend[A](thunk: => IO[A]): IO[A] = IO(thunk.unsafeRunSync())
+    def suspend[A](thunk: => IO[A]): IO[A] = unit *> thunk
 
     def delay[A](body: => A): IO[A] = new IO(() => body)
 
