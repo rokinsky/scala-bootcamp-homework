@@ -12,22 +12,18 @@ import scala.util.{Failure, Success, Try}
 class EffectsHomework1Spec extends AnyFlatSpec with Matchers {
   "map" should "transform values" in {
     forAll { (x: String, y: String) =>
-      {
-        val a = IO(x)
-        val c = a.map(_ => y)
-        c.unsafeRunSync() shouldEqual y
-      }
+      val a = IO(x)
+      val c = a.map(_ => y)
+      c.unsafeRunSync() shouldEqual y
     }
   }
 
   "flatMap" should "work correctly" in {
     forAll { (x: String, y: String) =>
-      {
-        val a = IO(x)
-        val b = IO(y)
-        val c = a.flatMap(_ => b)
-        c.unsafeRunSync() shouldEqual y
-      }
+      val a = IO(x)
+      val b = IO(y)
+      val c = a.flatMap(_ => b)
+      c.unsafeRunSync() shouldEqual y
     }
   }
 
@@ -283,13 +279,11 @@ class EffectsHomework1Spec extends AnyFlatSpec with Matchers {
 
   "unlessA" should "handle true condition" in {
     forAll { (x: String) =>
-      {
-        val baos = new ByteArrayOutputStream()
-        Console.withOut(baos) {
-          val input = IO.unlessA(cond = true) { IO(print(x)) }
-          baos.toString shouldEqual ""
-          input.unsafeRunSync() shouldEqual ()
-        }
+      val baos = new ByteArrayOutputStream()
+      Console.withOut(baos) {
+        val input = IO.unlessA(cond = true) { IO(print(x)) }
+        baos.toString shouldEqual ""
+        input.unsafeRunSync() shouldEqual ()
       }
     }
   }
