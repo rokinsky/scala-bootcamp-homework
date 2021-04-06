@@ -71,3 +71,7 @@ sbt test
   ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchySpec.scala)),
   [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
+
+- [x] *2021-04-12*
+  [TestingJson](src/main/scala/com/evolutiongaming/bootcamp/testing/Json.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/testing/JsonSpec.scala))
