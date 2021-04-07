@@ -6,6 +6,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 
+import scala.math.sqrt
+
 class JsonSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks with Matchers {
   import Json._
 
@@ -16,16 +18,17 @@ class JsonSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks with Matc
     second <- secondGen
   } yield (first, second)
 
-  def jsonGen: Gen[Json] = Gen.sized(depth => jsonGen(depth, 8))
+  def jsonGen: Gen[Json] = Gen.sized(size => jsonGen(size, sqrt(size).toInt))
 
   def jsonGen(maxDepth: Int, maxBreadth: Int): Gen[Json] = (maxDepth, maxBreadth) match {
-    case (0, _) => jsonPrimitiveGen
-    case (d, b) => Gen.oneOf(jsonPrimitiveGen, jsonComplexGen(d, b))
+    case (0, _)           => jsonPrimitiveGen
+    case (_, 0)           => jsonPrimitiveGen
+    case (depth, breadth) => Gen.oneOf(jsonPrimitiveGen, jsonComplexGen(depth, breadth))
   }
 
   def jsonComplexGen(maxDepth: Int, maxBreadth: Int): Gen[Json] = for {
     depth   <- Gen.choose(0, maxDepth - 1)
-    breadth <- Gen.choose(0, maxBreadth)
+    breadth <- Gen.choose(0, maxBreadth - 1)
     json    <- Gen.oneOf(jsonArrayGen(depth, breadth), jsonObjectGen(depth, breadth))
   } yield json
 
