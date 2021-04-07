@@ -23,12 +23,12 @@ class JsonSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks with Matc
   def jsonGen(maxDepth: Int, maxBreadth: Int): Gen[Json] = (maxDepth, maxBreadth) match {
     case (0, _)           => jsonPrimitiveGen
     case (_, 0)           => jsonPrimitiveGen
-    case (depth, breadth) => Gen.oneOf(jsonPrimitiveGen, jsonComplexGen(depth, breadth))
+    case (depth, breadth) => Gen.oneOf(jsonPrimitiveGen, jsonComplexGen(depth - 1, breadth - 1))
   }
 
   def jsonComplexGen(maxDepth: Int, maxBreadth: Int): Gen[Json] = for {
-    depth   <- Gen.choose(0, maxDepth - 1)
-    breadth <- Gen.choose(0, maxBreadth - 1)
+    depth   <- Gen.choose(0, maxDepth)
+    breadth <- Gen.choose(0, maxBreadth)
     json    <- Gen.oneOf(jsonArrayGen(depth, breadth), jsonObjectGen(depth, breadth))
   } yield json
 
