@@ -21,9 +21,9 @@ class JsonSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks with Matc
   def jsonGen: Gen[Json] = Gen.sized(size => jsonGen(size, sqrt(size).toInt))
 
   def jsonGen(maxDepth: Int, maxBreadth: Int): Gen[Json] = (maxDepth, maxBreadth) match {
-    case (0, _)           => jsonPrimitiveGen
-    case (_, 0)           => jsonPrimitiveGen
-    case (depth, breadth) => Gen.oneOf(jsonPrimitiveGen, jsonComplexGen(depth - 1, breadth - 1))
+    case (0, _) => jsonSimpleGen
+    case (_, 0) => jsonSimpleGen
+    case (_, _) => Gen.oneOf(jsonSimpleGen, jsonComplexGen(maxDepth - 1, maxBreadth - 1))
   }
 
   def jsonComplexGen(maxDepth: Int, maxBreadth: Int): Gen[Json] = for {
@@ -38,7 +38,7 @@ class JsonSpec extends AnyFlatSpec with ScalaCheckDrivenPropertyChecks with Matc
   def jsonArrayGen(depth: Int, breadth: Int): Gen[JArray] =
     Gen.containerOfN[Vector, Json](breadth, jsonGen(depth, breadth)).map(JArray)
 
-  def jsonPrimitiveGen: Gen[Json] =
+  def jsonSimpleGen: Gen[Json] =
     Gen.oneOf(Gen.const(JNull), jsonBooleanGen, jsonNumberGen, jsonStringGen)
 
   def jsonBooleanGen: Gen[JBoolean] = Gen.oneOf(true, false).map(JBoolean)
