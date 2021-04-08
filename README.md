@@ -71,3 +71,7 @@ sbt test
   ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchySpec.scala)),
   [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
+
+- [x] *2021-04-14*
+  [SharedStateHomework](src/main/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomework.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomeworkSpec.scala))
