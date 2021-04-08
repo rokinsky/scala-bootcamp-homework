@@ -25,7 +25,7 @@ object SharedStateHomework {
     def put(key: K, value: V): F[Unit]
   }
 
-  class RefCache[F[_]: Clock: Monad, K, V](
+  class RefCache[F[_]: Monad: Timer: Clock, K, V](
     state:     CacheState[F, K, V],
     expiresIn: FiniteDuration
   ) extends Cache[F, K, V] {
@@ -45,8 +45,8 @@ object SharedStateHomework {
       _   <- state.update(_.filter { case (_, (timestamp, _)) => now - timestamp < expiresIn.toMillis })
     } yield ()
 
-    def expireAfter(time: FiniteDuration)(implicit T: Timer[F]): F[Unit] =
-      T.sleep(time) *> expire
+    def expireAfter(time: FiniteDuration): F[Unit] =
+      Timer[F].sleep(time) *> expire
   }
 
   object Cache {
