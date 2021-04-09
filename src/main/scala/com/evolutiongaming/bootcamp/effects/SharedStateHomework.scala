@@ -4,6 +4,7 @@ import cats.Monad
 import cats.effect.concurrent.Ref
 import cats.effect.{Clock, Concurrent, Timer}
 import cats.implicits._
+import cats.effect.implicits._
 
 import scala.concurrent.duration._
 
@@ -32,7 +33,7 @@ object SharedStateHomework {
 
     def get(key: K): F[Option[V]] = for {
       map   <- state.get
-      value <- map.get(key).traverse { case (_, v) => Monad[F].pure(v) }
+      value <- map.get(key).traverse { case (_, v) => v.pure[F] }
     } yield value
 
     def put(key: K, value: V): F[Unit] = for {
@@ -55,8 +56,8 @@ object SharedStateHomework {
       checkOnExpirationsEvery: FiniteDuration
     ): F[Cache[F, K, V]] = for {
       state <- Ref.of[F, CacheMap[K, V]](Map.empty)
-      cache <- Monad[F].pure(new RefCache(state, expiresIn))
-      _     <- Concurrent[F].start(cache.expireAfter(checkOnExpirationsEvery).foreverM.void)
+      cache <- new RefCache(state, expiresIn).pure[F]
+      _     <- cache.expireAfter(checkOnExpirationsEvery).foreverM.void.start
     } yield cache
   }
 }
