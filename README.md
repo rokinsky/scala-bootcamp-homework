@@ -72,6 +72,14 @@ sbt test
   [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
 
-- [x] *2021-04-12*
+- [x] *2021-04-05*
+  [EffectsHomework1](src/main/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1Spec.scala))
+  
+  - [x] *2021-04-12*
   [TestingJson](src/main/scala/com/evolutiongaming/bootcamp/testing/Json.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/testing/JsonSpec.scala))
+
+- [x] *2021-04-14*
+  [SharedStateHomework](src/main/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomework.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomeworkSpec.scala))
