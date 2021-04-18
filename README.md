@@ -59,6 +59,10 @@ sbt test
   [ImplicitsHomework](src/main/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsHomework.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/ImplicitsHomeworkSpec.scala))
 
+- [x] *2021-03-08*
+  [QAndAExamples](src/main/scala/com/evolutiongaming/bootcamp/typeclass/v2/QAndAExamples.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/v2/QAndAExamplesSpec.scala))
+
 - [x] *2021-03-10*
   [ErrorHandling](src/main/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandling.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandlingSpec.scala))
