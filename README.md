@@ -62,3 +62,24 @@ sbt test
 - [x] *2021-03-08*
   [QAndAExamples](src/main/scala/com/evolutiongaming/bootcamp/typeclass/v2/QAndAExamples.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/typeclass/v2/QAndAExamplesSpec.scala))
+
+- [x] *2021-03-10*
+  [ErrorHandling](src/main/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandling.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/error_handling/ErrorHandlingSpec.scala))
+
+- [x] *2021-03-15*
+  [JSON](src/test/scala/com/evolutiongaming/bootcamp/json/HomeworkSpec.scala)
+
+- [x] *2021-03-22*
+  [TypeHierarchy](src/main/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchy.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/TypeHierarchySpec.scala)),
+  [FiveFundamentalMonads](src/main/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonads.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/cats/FiveFundamentalMonadsSpec.scala))
+
+- [x] *2021-04-05*
+  [EffectsHomework1](src/main/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1Spec.scala))
+
+- [x] *2021-04-14*
+  [SharedStateHomework](src/main/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomework.scala)
+  ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomeworkSpec.scala))
