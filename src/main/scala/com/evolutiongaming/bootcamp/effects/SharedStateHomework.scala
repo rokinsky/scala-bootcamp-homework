@@ -2,9 +2,9 @@ package com.evolutiongaming.bootcamp.effects
 
 import cats.Monad
 import cats.effect.concurrent.Ref
-import cats.effect.{Clock, Concurrent, Resource, Sync, Timer}
-import cats.implicits._
 import cats.effect.implicits._
+import cats.effect.{Clock, Concurrent, Resource, Timer}
+import cats.implicits._
 
 import scala.concurrent.duration._
 
@@ -59,7 +59,7 @@ object SharedStateHomework {
         state <- Ref.of[F, CacheMap[K, V]](Map.empty)
         cache <- new RefCache(state, expiresIn).pure[F]
         fiber <- cache.expireAfter(checkOnExpirationsEvery).foreverM.void.start
-      } yield (cache, Sync[F].delay(fiber.cancel))
+      } yield (cache, fiber.cancel)
     )
   }
 }
