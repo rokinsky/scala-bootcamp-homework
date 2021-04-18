@@ -2,7 +2,7 @@ package com.evolutiongaming.bootcamp.effects
 
 import cats.Monad
 import cats.effect.concurrent.Ref
-import cats.effect.{Clock, Concurrent, Timer}
+import cats.effect.{Clock, Concurrent, Resource, Sync, Timer}
 import cats.implicits._
 import cats.effect.implicits._
 
@@ -26,7 +26,7 @@ object SharedStateHomework {
     def put(key: K, value: V): F[Unit]
   }
 
-  class RefCache[F[_]: Monad: Timer: Clock, K, V](
+  private class RefCache[F[_]: Monad: Timer, K, V](
     state:     CacheState[F, K, V],
     expiresIn: FiniteDuration
   ) extends Cache[F, K, V] {
@@ -51,13 +51,15 @@ object SharedStateHomework {
   }
 
   object Cache {
-    def of[F[_]: Concurrent: Timer: Clock, K, V](
+    def of[F[_]: Concurrent: Timer, K, V](
       expiresIn:               FiniteDuration,
       checkOnExpirationsEvery: FiniteDuration
-    ): F[Cache[F, K, V]] = for {
-      state <- Ref.of[F, CacheMap[K, V]](Map.empty)
-      cache <- new RefCache(state, expiresIn).pure[F]
-      _     <- cache.expireAfter(checkOnExpirationsEvery).foreverM.void.start
-    } yield cache
+    ): Resource[F, Cache[F, K, V]] = Resource[F, Cache[F, K, V]](
+      for {
+        state <- Ref.of[F, CacheMap[K, V]](Map.empty)
+        cache <- new RefCache(state, expiresIn).pure[F]
+        fiber <- cache.expireAfter(checkOnExpirationsEvery).foreverM.void.start
+      } yield (cache, Sync[F].delay(fiber.cancel))
+    )
   }
 }
