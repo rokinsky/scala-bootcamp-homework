@@ -38,12 +38,12 @@ object SharedStateHomework {
 
     def put(key: K, value: V): F[Unit] = for {
       now <- Clock[F].realTime(MILLISECONDS)
-      _   <- state.update(_.updated(key, (now, value)))
+      _   <- state.update(_.updated(key, (now + expiresIn.toMillis, value)))
     } yield ()
 
     def expire: F[Unit] = for {
       now <- Clock[F].realTime(MILLISECONDS)
-      _   <- state.update(_.filter { case (_, (timestamp, _)) => now - timestamp < expiresIn.toMillis })
+      _   <- state.update(_.filter { case (_, (expiration, _)) => expiration > now })
     } yield ()
 
     def expireAfter(time: FiniteDuration): F[Unit] =
