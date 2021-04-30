@@ -1,6 +1,10 @@
 package com.evolutiongaming.bootcamp.akka.actors.homework
 
 import akka.actor._
+import com.evolutiongaming.bootcamp.akka.actors.homework.BinaryTreeSet.ExtraOperation.{CopyChildren, GarbageCollection}
+import com.evolutiongaming.bootcamp.akka.actors.homework.BinaryTreeSet.ExtraOperationReply.CopyChildrenFinished
+
+import scala.collection.immutable.Queue
 
 object BinaryTreeSet {
 
@@ -35,15 +39,40 @@ object BinaryTreeSet {
     // successful completion of an insert or remove operation
     final case class OperationFinished(id: Int) extends OperationReply
   }
+
+  trait ExtraOperation
+  object ExtraOperation {
+    final case object GarbageCollection extends ExtraOperation
+    final case class CopyChildren(newRoot: ActorRef) extends ExtraOperation
+  }
+
+  sealed trait ExtraOperationReply
+  object ExtraOperationReply {
+    final case object CopyChildrenFinished extends ExtraOperationReply
+  }
 }
 
 final class BinaryTreeSet extends Actor {
   import BinaryTreeSet._
 
-  private val root = createRoot
+  def receive: Receive = working(createRoot)
 
-  override def receive: Receive = { case m: Operation =>
-    root ! m
+  private def working(root: ActorRef): Receive = {
+    case GarbageCollection =>
+      val newRoot = createRoot
+      context.become(garbageCollecting(newRoot, Queue.empty))
+      root ! CopyChildren(newRoot)
+
+    case m: Operation => root ! m
+  }
+
+  private def garbageCollecting(newRoot: ActorRef, pendingOperations: Queue[Operation]): Receive = {
+    case CopyChildrenFinished =>
+      context.become(working(newRoot))
+      pendingOperations.foreach(newRoot ! _)
+
+    case m: Operation =>
+      context.become(garbageCollecting(newRoot, pendingOperations.enqueue(m)))
   }
 
   private def createRoot: ActorRef = context.actorOf(BinaryTreeNode.props(0, initiallyRemoved = true))
