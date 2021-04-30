@@ -43,32 +43,32 @@ final class BinaryTreeNode(val elem: Int, initiallyRemoved: Boolean) extends Act
     if (m.elem > elem) Right else Left
   }
 
-  private def forward(m: Operation, ifEmpty: => Unit): Unit = {
+  private def forwardOperation(m: Operation)(ifEmpty: => Unit): Unit = {
     subtrees.get(nextPosition(m)).fold(ifEmpty)(_ ! m)
   }
 
-  private def fold(m: Operation)(ifEmpty: => Unit)(ifMatch: => Unit): Unit = {
+  private def foldOperation(m: Operation)(ifEmpty: => Unit)(ifMatch: => Unit): Unit = {
     if (m.elem == elem) ifMatch
-    else forward(m, ifEmpty)
+    else forwardOperation(m)(ifEmpty)
   }
 
-  private def finish(m: Operation): Unit = {
+  private def finishOperation(m: Operation): Unit = {
     m.requester ! OperationFinished(m.id)
   }
 
   private def doInsert(m: Insert): Unit = {
-    fold(m) {
+    foldOperation(m) {
       val actorRef = context.actorOf(BinaryTreeNode.props(m.elem, initiallyRemoved = false))
       subtrees += (nextPosition(m) -> actorRef)
-      finish(m)
+      finishOperation(m)
     } {
       removed = false
-      finish(m)
+      finishOperation(m)
     }
   }
 
   private def doContains(m: Contains): Unit = {
-    fold(m) {
+    foldOperation(m) {
       m.requester ! ContainsResult(m.id, result = false)
     } {
       m.requester ! ContainsResult(m.id, !removed)
@@ -76,11 +76,11 @@ final class BinaryTreeNode(val elem: Int, initiallyRemoved: Boolean) extends Act
   }
 
   private def doRemove(m: Remove): Unit = {
-    fold(m) {
-      finish(m)
+    foldOperation(m) {
+      finishOperation(m)
     } {
       removed = true
-      finish(m)
+      finishOperation(m)
     }
   }
 
