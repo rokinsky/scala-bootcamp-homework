@@ -26,5 +26,5 @@ object GuessServerApp extends IOApp {
 
 object GuessHttpClientApp extends IOApp {
   override def run(args: List[String]): IO[ExitCode] =
-    new GuessHttpClient[IO].resource.use(IO.pure).as(ExitCode.Success)
+    GuessHttpClient.resource[IO].use(IO.pure).as(ExitCode.Success)
 }

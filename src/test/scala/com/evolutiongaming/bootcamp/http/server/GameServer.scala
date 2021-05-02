@@ -1,7 +1,9 @@
 package com.evolutiongaming.bootcamp.http.server
 
 import cats.effect._
+import com.evolutiongaming.bootcamp.http.config.GuessConfig
 import com.evolutiongaming.bootcamp.http.models.GameState
+import io.circe.config.parser
 import org.http4s.HttpApp
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.server.{Router, Server}
@@ -18,10 +20,11 @@ object GameServer {
 
   def resource[F[_]: Sync: ConcurrentEffect: Timer]: Resource[F, Server[F]] =
     for {
+      conf       <- Resource.liftF(parser.decodePathF[F, GuessConfig]("guess"))
       repository <- Repository.of[F, UUID, GameState]
       ctx        <- Resource.pure(GameModule.of(repository))
       server <- BlazeServerBuilder[F](global)
-        .bindHttp(9001)
+        .bindHttp(conf.server.port, conf.server.host)
         .withHttpApp(httpApp(ctx))
         .resource
     } yield server
