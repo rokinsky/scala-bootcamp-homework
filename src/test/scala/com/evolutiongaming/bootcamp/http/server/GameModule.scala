@@ -13,6 +13,6 @@ trait GameModule[F[_]] {
 object GameModule {
   def of[F[_]: Sync](repository: Repository[F, UUID, GameState]): GameModule[F] = new GameModule[F] {
     override def gameHttpEndpoint: HttpRoutes[F] =
-      GameHttpEndpoint[F](GuessService.of(repository)).service
+      GameHttpEndpoint[F](GuessService.of(repository)).endpoint
   }
 }

@@ -13,7 +13,7 @@ import java.util.UUID
 import scala.concurrent.ExecutionContext.global
 
 object GameServer {
-  def httpApp[F[_]: Sync](ctx: GameModule[F]): HttpApp[F] =
+  private def httpApp[F[_]: Sync](ctx: GameModule[F]): HttpApp[F] =
     Router(
       "/games" -> ctx.gameHttpEndpoint,
     ).orNotFound
