@@ -20,7 +20,7 @@ object GameServer {
 
   def resource[F[_]: Sync: ConcurrentEffect: Timer]: Resource[F, Server[F]] =
     for {
-      conf       <- Resource.liftF(parser.decodePathF[F, GuessConfig]("guess"))
+      conf       <- Resource.eval(parser.decodePathF[F, GuessConfig]("guess"))
       repository <- Repository.of[F, UUID, GameState]
       ctx        <- Resource.pure(GameModule.of(repository))
       server <- BlazeServerBuilder[F](global)
