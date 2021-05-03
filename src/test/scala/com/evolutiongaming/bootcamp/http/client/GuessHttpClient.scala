@@ -46,9 +46,9 @@ final private class GuessHttpClient[F[_]: Sync](client: Client[F], uri: Uri) ext
 
 object GuessHttpClient {
   def resource[F[_]: Sync: ConcurrentEffect]: Resource[F, Client[F]] = for {
-    conf   <- Resource.liftF(parser.decodePathF[F, GuessConfig]("guess"))
-    uri    <- Resource.liftF(Sync[F].fromEither(Uri.fromString(conf.client.httpUri)))
+    conf   <- Resource.eval(parser.decodePathF[F, GuessConfig]("guess"))
+    uri    <- Resource.eval(Sync[F].fromEither(Uri.fromString(conf.client.httpUri)))
     client <- BlazeClientBuilder[F](ExecutionContext.global).resource
-    _      <- Resource.liftF(new GuessHttpClient(client, uri).run)
+    _      <- Resource.eval(new GuessHttpClient(client, uri).run)
   } yield client
 }
