@@ -1,7 +1,7 @@
 package com.evolutiongaming.bootcamp.http
 
 import cats.effect.{ExitCode, IO, IOApp}
-import com.evolutiongaming.bootcamp.http.client.GuessHttpClient
+import com.evolutiongaming.bootcamp.http.client.{GuessHttpClient, GuessWsClient}
 import com.evolutiongaming.bootcamp.http.server.GameServer
 
 // Homework. Place the solution under `http` package in your homework repository.
@@ -27,4 +27,9 @@ object GuessServerApp extends IOApp {
 object GuessHttpClientApp extends IOApp {
   override def run(args: List[String]): IO[ExitCode] =
     GuessHttpClient.resource[IO].use(IO.pure).as(ExitCode.Success)
+}
+
+object GuessWsClientApp extends IOApp {
+  override def run(args: List[String]): IO[ExitCode] =
+    GuessWsClient.resource[IO].use(IO.pure).as(ExitCode.Success)
 }

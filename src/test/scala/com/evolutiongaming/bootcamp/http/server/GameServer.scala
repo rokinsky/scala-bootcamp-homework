@@ -16,6 +16,7 @@ object GameServer {
   private def httpApp[F[_]: Sync](ctx: GameModule[F]): HttpApp[F] =
     Router(
       "/games" -> ctx.gameHttpEndpoint,
+      "/games" -> ctx.gameWsEndpoint
     ).orNotFound
 
   def resource[F[_]: Sync: ConcurrentEffect: Timer]: Resource[F, Server[F]] =
