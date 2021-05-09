@@ -4,8 +4,6 @@ import akka.actor._
 import com.evolutiongaming.bootcamp.akka.actors.homework.BinaryTreeSet.ExtraOperation.{CopyChildren, GarbageCollection}
 import com.evolutiongaming.bootcamp.akka.actors.homework.BinaryTreeSet.ExtraOperationReply.CopyChildrenFinished
 
-import scala.collection.immutable.Queue
-
 object BinaryTreeSet {
 
   sealed trait Operation {
@@ -52,7 +50,7 @@ object BinaryTreeSet {
   }
 }
 
-final class BinaryTreeSet extends Actor {
+final class BinaryTreeSet extends Actor with Stash {
   import BinaryTreeSet._
 
   def receive: Receive = working(createRoot)
@@ -60,19 +58,19 @@ final class BinaryTreeSet extends Actor {
   private def working(root: ActorRef): Receive = {
     case GarbageCollection =>
       val newRoot = createRoot
-      context.become(garbageCollecting(newRoot, Queue.empty))
+      context.become(garbageCollecting(newRoot))
       root ! CopyChildren(newRoot)
 
     case m: Operation => root ! m
   }
 
-  private def garbageCollecting(newRoot: ActorRef, pendingOperations: Queue[Operation]): Receive = {
+  private def garbageCollecting(newRoot: ActorRef): Receive = {
     case CopyChildrenFinished =>
+      unstashAll()
       context.become(working(newRoot))
-      pendingOperations.foreach(newRoot ! _)
 
-    case m: Operation =>
-      context.become(garbageCollecting(newRoot, pendingOperations.enqueue(m)))
+    case _: Operation =>
+      stash()
   }
 
   private def createRoot: ActorRef = context.actorOf(BinaryTreeNode.props(0, initiallyRemoved = true))
