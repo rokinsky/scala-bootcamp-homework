@@ -14,6 +14,7 @@ scalacOptions ++= Seq(
 
 val http4sVersion         = "0.21.7"
 val circeVersion          = "0.13.0"
+val circeConfigVersion    = "0.8.0"
 val playVersion           = "2.8.2"
 val doobieVersion         = "0.9.0"
 val catsVersion           = "2.2.0"
@@ -39,6 +40,7 @@ libraryDependencies ++= Seq(
   "org.http4s"               %% "http4s-blaze-server"           % http4sVersion,
   "org.http4s"               %% "http4s-blaze-client"           % http4sVersion,
   "org.http4s"               %% "http4s-circe"                  % http4sVersion,
+  "org.http4s"               %% "http4s-jdk-http-client"        % "0.3.6",
   "com.typesafe.akka"        %% "akka-http"                     % akkaHttpVersion,
   "de.heikoseeberger"        %% "akka-http-circe"               % akkaHttpCirceVersion,
   "com.typesafe.akka"        %% "akka-stream"                   % akkaVersion,
@@ -56,6 +58,7 @@ libraryDependencies ++= Seq(
   "io.circe"                 %% "circe-generic-extras"          % circeVersion,
   "io.circe"                 %% "circe-optics"                  % circeVersion,
   "io.circe"                 %% "circe-parser"                  % circeVersion,
+  "io.circe"                 %% "circe-config"                  % circeConfigVersion,
   "com.typesafe.akka"        %% "akka-actor"                    % akkaVersion,
   "com.typesafe.akka"        %% "akka-persistence"              % akkaVersion,
   "com.typesafe.akka"        %% "akka-cluster"                  % akkaVersion,
