@@ -46,14 +46,14 @@ object EffectsContinued extends IOApp {
     for {
       blocker          <- Blocker.apply[F]
       parseService     <- ParseService.of[F](blocker)
-      file             <- Resource.liftF(parseService.parse[File]("Enter filepath: "))
-      seed             <- Resource.liftF(parseService.parse[Seed]("Enter seed: "))
+      file             <- Resource.eval(parseService.parse[File]("Enter filepath: "))
+      seed             <- Resource.eval(parseService.parse[Seed]("Enter seed: "))
       fileService      <- FileService.of[F](file, blocker)
       signatureRepo    <- SignatureFakeRepository.of[F]
       signatureService <- SignatureService.of[F](signatureRepo)
-      words            <- Resource.liftF(fileService.words)
-      hashes           <- Resource.liftF(HashService.hashes[F](seed))
-      _                <- Resource.liftF(signatureService.sign(file, words, hashes))
+      words            <- Resource.eval(fileService.words)
+      hashes           <- Resource.eval(HashService.hashes[F](seed))
+      _                <- Resource.eval(signatureService.sign(file, words, hashes))
     } yield ()
   }
 
