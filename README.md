@@ -76,6 +76,9 @@ sbt test
   [EffectsHomework1](src/main/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/EffectsHomework1Spec.scala))
 
+  - [x] *2021-04-07*
+  [EffectsContinued](src/test/scala/com/evolutiongaming/bootcamp/effects/minhash)
+
 - [x] *2021-04-14*
   [SharedStateHomework](src/main/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomework.scala)
   ([t](src/test/scala/com/evolutiongaming/bootcamp/effects/SharedStateHomeworkSpec.scala))
